@@ -12,7 +12,11 @@ import { CryptoFiatHub, CryptoDollar, Rewards, Store } from 'proof-contracts-int
  * Proof repositories.
  * It is preferable to use the addresses of deployed contracts in the case of the Mainnet and Rinkeby networks
  * For the Ganache and Private Geth chain "networks" (respectively 1000 and 8888), input the addresses deployed
- * on your own localhost
+ * on your own localhost.
+ *
+ * The default addresses for the network 8888 (Private Geth Chain) are the addresses of contracts already deployed
+ * on our private geth chain repository 
+ * 
  */
 export const networks = {
   1: {
@@ -28,10 +32,10 @@ export const networks = {
     Store: Store.networks[4].address
   },
   8888: {
-    CryptoFiatHub: '0x9836f8141f96fca273a0c4bf70af99cb9da58796',
-    CryptoDollar: '0xebfded149b86d4088c40a8b61d0388c584a446c8',
-    Rewards: '0x6b97d162ec1b44c24bf63e39956ddfae85b08799',
-    Store: '0xa619ba28517c97fc261489318b66d4eaa58d9e0e'
+    CryptoFiatHub: '0xe697df331dc3dec15cca00196d68094e5f1dfb3e',
+    CryptoDollar: '0x080ad9df9d0dc7e3d7335563e35c1ffd7b9cf8b4',
+    Rewards: '0x132cd9073785489134b1bd1ff9d80d00c7795d3d',
+    Store: '0xbf3a2acc78b6c339e9d4afc3466ec4abfd5f4bca'
   },
   1000: {
     CryptoFiatHub: '0xd957c03b9bf66aa775d6ca7b3e7efc37e6e5a1a5',
