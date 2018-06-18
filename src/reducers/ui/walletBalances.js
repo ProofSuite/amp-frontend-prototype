@@ -2,7 +2,7 @@ import {
   WALLET_BALANCES_LOADING,
   WALLET_BALANCES_ERROR,
   WALLET_BALANCES_UPDATED
-} from '../../components/walletBalances/actions'
+} from '../../actions/walletBalancesActions'
 
 const initialState = {
   loading: false,

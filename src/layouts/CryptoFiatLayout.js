@@ -8,7 +8,7 @@ import PropTypes from 'prop-types'
 import LoaderLayout from './LoaderLayout'
 
 import { queryAccounts } from '../actions/accountActions'
-import { queryWalletBalances } from '../components/walletBalances/actions'
+import { queryWalletBalances } from '../actions/walletBalancesActions'
 
 import styles from './CryptoFiatLayout.scss'
 import { getAccountsIsLoading } from '../selectors/'
