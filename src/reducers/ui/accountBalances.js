@@ -2,7 +2,7 @@ import {
   ACCOUNT_BALANCES_LOADING,
   ACCOUNT_BALANCES_ERROR,
   ACCOUNT_BALANCES_UPDATED
-} from '../../components/accountBalances/actions'
+} from '../../actions/accountBalancesActions'
 
 const initialState = {
   loading: false,

@@ -1,10 +1,11 @@
 import { CryptoDollar } from 'proof-contracts-interfaces'
-import { getContractInstance } from '../../helpers/contracts'
-import { updateCryptoDollarBalances } from '../../actions/cryptoDollarBalancesActions.js'
-import { updateEtherBalances } from '../../actions/etherBalancesActions.js'
-import { formatEtherColumn, formatCUSDColumn } from '../../helpers/format'
-import { queryCryptoDollarStateError } from '../../actions/cryptoDollarActions'
-import { getProvider, getProviderInfo } from '../../helpers/providers'
+import { updateCryptoDollarBalances } from './cryptoDollarBalancesActions'
+import { updateEtherBalances } from './etherBalancesActions'
+import { queryCryptoDollarStateError } from './cryptoDollarActions'
+
+import { formatEtherColumn, formatCUSDColumn } from '../helpers/format'
+import { getContractInstance } from '../helpers/contracts'
+import { getProvider, getProviderInfo } from '../helpers/providers'
 
 export const ACCOUNT_BALANCES_LOADING = 'ACCOUNT_BALANCES_LOADING'
 export const ACCOUNT_BALANCES_UPDATED = 'ACCOUNT_BALANCES_UPDATED'
