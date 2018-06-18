@@ -1,48 +1,79 @@
 import React, { Component } from 'react'
-import { Menu, Segment } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
+import {
+  Navbar,
+  NavbarGroup,
+  NavbarHeading,
+  NavbarDivider,
+  Alignment,
+  Button,
+  InputGroup
+} from '@blueprintjs/core'
 
 class NavBar extends Component {
-  state = { activeItem: 'home' }
+  state = { active: 'wallet' }
 
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+  handleClick = e => {
+    console.log('clicked', e.target)
+  }
 
   render () {
-    const { activeItem } = this.state
-
     return (
-      <Segment inverted>
-        <Menu secondary borderless inverted>
-          <Link to='/'>
-            <Menu.Item
-              name='Cryptofiat'
-              active={activeItem === 'Cryptofiat'}
-              onClick={this.handleItemClick}
+      <Navbar fixedToTop>
+        <NavbarGroup align={Alignment.LEFT}>
+          <NavbarHeading>AMP</NavbarHeading>
+          <NavbarDivider />
+          <Link to='/' className='pt-no-style'>
+            <Button
+              minimal
+              name='wallet'
+              icon='shield'
+              text='Wallet'
+              active={this.state.active === 'wallet'}
+              onClick={this.handleClick}
             />
           </Link>
-          <Link to='/dex'>
-            <Menu.Item
-              name='DEX'
-              active={activeItem === 'DEX'}
-              onClick={this.handleItemClick}
+          <Link to='/dex' className='pt-no-style'>
+            <Button
+              minimal
+              icon='dollar'
+              text='DEX'
+              active={this.state.active === 'dex'}
+              onClick={this.handleClick}
             />
           </Link>
-          <Link to='/settings'>
-            <Menu.Item
-              name='Settings'
-              active={activeItem === 'Settings'}
-              onClick={this.handleItemClick}
+          <Link to='/settings' className='pt-no-style'>
+            <Button
+              minimal
+              icon='settings'
+              text='Settings'
+              active={this.state.active === 'settings'}
+              onClick={this.handleClick}
             />
           </Link>
-          <Link to='/test'>
-            <Menu.Item
-              name='Test'
-              active={activeItem === 'Test'}
-              onClick={this.handleItemClick}
+          <Link to='/test' className='pt-no-style'>
+            <Button
+              minimal
+              icon='wrench'
+              text='Test'
+              active={this.state.active === 'test'}
+              onClick={this.handleClick}
             />
           </Link>
-        </Menu>
-      </Segment>
+          <Link to='/table' className='pt-no-style'>
+            <Button
+              minimal
+              icon='wrench'
+              text='Table'
+              active={this.state.table === 'table'}
+              onClick={this.handleClick}
+            />
+          </Link>
+        </NavbarGroup>
+        <NavbarGroup align={Alignment.RIGHT}>
+          <InputGroup placeholder='Search...' type='search' />
+        </NavbarGroup>
+      </Navbar>
     )
   }
 }

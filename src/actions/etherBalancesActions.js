@@ -1,5 +1,5 @@
-import { getProviderUtils } from '../helpers/web3'
-import { formatEtherColumn } from '../helpers/formatHelpers'
+import { formatEtherColumn } from '../helpers/format'
+import { getProviderInfo, getProvider } from '../helpers/providers'
 
 export const ETHER_BALANCES_LOADING = 'ETHER_BALANCES_LOADING'
 export const ETHER_BALANCES_ERROR = 'ETHER_BALANCES_ERROR'
@@ -26,12 +26,18 @@ export const queryEtherBalances = cryptoDollarBalances => async (dispatch, getSt
   try {
     etherBalancesLoading()
 
-    const provider = getProviderUtils(getState)
-    if (typeof provider.web3 === 'undefined') return etherBalancesError()
+    let { networkID } = getProviderInfo(getState)
+    if (typeof networkID === 'undefined') {
+      return etherBalancesError()
+    }
 
-    const accounts = getState().accounts.addresses
+    let provider = getProvider(getState)
+    if (typeof provider === 'undefined') {
+      return etherBalancesError()
+    }
 
-    let etherBalancesCalls = accounts.map((account) => provider.web3.eth.getBalance(account))
+    let accounts = getState().accounts.addresses
+    let etherBalancesCalls = accounts.map((account) => provider.getBalance(account))
     let etherBalances = await Promise.all(etherBalancesCalls)
     let balances = formatEtherColumn(etherBalances)
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Header, Form } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
-import GasSettings from '../../common/GasSettings'
+import GasSettings from '../../common/GasSettings/GasSettings'
 import TxNotification from '../../common/TxNotification'
 
 class BuyCryptoDollarInput extends Component {

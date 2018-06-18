@@ -3,7 +3,7 @@ import WalletManagerCard from './WalletManagerCard'
 import CreateWalletModal from './modals/createWallet/CreateWalletModal'
 import ImportWalletModal from './modals/importWallet/ImportWalletModal'
 import DeleteWalletModal from './modals/deleteWallet/DeleteWalletModal'
-import styles from '../../layouts/SettingsLayout.css'
+import styles from '../../layouts/SettingsLayout.scss'
 
 class WalletManager extends Component {
 

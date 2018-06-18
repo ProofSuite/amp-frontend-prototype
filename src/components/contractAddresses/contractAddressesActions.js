@@ -1,9 +1,9 @@
-import store from '../../redux-store'
 import CryptoDollarInterface from '../../../build/contracts/CryptoDollar.json'
 import CryptoFiatHubInterface from '../../../build/contracts/CryptoFiatHub.json'
 import RewardsInterface from '../../../build/contracts/Rewards.json'
 import StoreInterface from '../../../build/contracts/Store.json'
-import { getTruffleContractAddress } from '../../helpers/contractHelpers'
+import { getTruffleContractAddress } from '../../helpers/contracts'
+import { getProvider, getProviderInfo } from '../../helpers/providers'
 
 const actions = {
   fetchingContractAddresses: () => ({ type: 'FETCHING_CONTRACT_ADDRESSES ' }),
@@ -12,14 +12,21 @@ const actions = {
 }
 
 export const fetchContractAddresses = () => {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     dispatch(actions.fetchingContractAddresses())
 
-    let web3 = store.getState().web3.web3Instance
-    if (typeof web3 === 'undefined') return dispatch(actions.fetchingContractAddressesError())
+    let { networkID } = getProviderInfo(getState)
+    if (typeof networkID === 'undefined') {
+      return dispatch(actions.fetchingContractAddressesError())
+    }
+
+    let provider = getProvider(getState)
+    if (typeof provider === 'undefined') {
+      return dispatch(actions.fetchingContractAddressesError())
+    }
 
     let contracts = [ CryptoFiatHubInterface, CryptoDollarInterface, RewardsInterface, StoreInterface ]
-    let addresses = contracts.map(contract => (getTruffleContractAddress(contract)))
+    let addresses = contracts.map(contract => (getTruffleContractAddress(contract, networkID)))
     let [ cryptoDollarAddress, cryptoFiatHubAddress, rewardsAddress, storeAddress ] = addresses
 
     let results = {

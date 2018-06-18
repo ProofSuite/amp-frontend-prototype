@@ -1,7 +1,7 @@
-import { getProviderUtils } from '../helpers/web3'
 import { CryptoDollar } from 'proof-contracts-interfaces'
-import { formatCUSDColumn, formatEtherColumn } from '../helpers/formatHelpers'
-import { getContractInstance } from '../helpers/contractHelpers'
+import { formatCUSDColumn, formatEtherColumn } from '../helpers/format'
+import { getContractInstance } from '../helpers/contracts'
+import { getProvider, getProviderInfo } from '../helpers/providers'
 
 export const CRYPTODOLLAR_BALANCES_LOADING = 'CRYPTODOLLAR_BALANCES_LOADING'
 export const CRYPTODOLLAR_BALANCE_ERROR = 'CRYPTODOLLAR_BALANCE_ERROR'
@@ -31,17 +31,25 @@ export const updateCryptoDollarBalances = cryptoDollarBalances => ({
 export const queryCryptoDollarBalances = cryptoDollarBalances => async (dispatch, getState) => {
   try {
     cryptoDollarBalancesLoading()
-    const provider = getProviderUtils(getState)
-    if (typeof provider.web3 === 'undefined') return cryptoDollarBalancesError()
 
+    let { networkID } = getProviderInfo(getState)
+    if (typeof networkID === 'undefined') {
+      return cryptoDollarBalancesError()
+    }
+
+    let provider = getProvider(getState)
+    if (typeof provider === 'undefined') {
+      return cryptoDollarBalancesError()
+    }
+
+    let cryptoDollar = getContractInstance(CryptoDollar, provider)
     let accounts = getState().accounts.addresses
-    let cryptoDollar = await getContractInstance(CryptoDollar, provider)
 
     let cryptoDollarBalancesCalls = accounts.map(account =>
-      cryptoDollar.methods.balanceOf(account).call()
+      cryptoDollar.balanceOf(account)
     )
     let reservedEtherBalancesCalls = accounts.map(account =>
-      cryptoDollar.methods.reservedEther(account).call()
+      cryptoDollar.reservedEther(account)
     )
     let cryptoDollarBalances = await Promise.all(cryptoDollarBalancesCalls)
     let reservedEtherBalances = await Promise.all(reservedEtherBalancesCalls)

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Card } from 'antd'
+import { Card } from '@blueprintjs/core'
 
-import styles from '../../layouts/SettingsLayout.css'
+import styles from '../../layouts/WalletLayout.scss'
 import styled from 'styled-components'
 
 class WalletManagerCard extends Component {
@@ -10,10 +10,11 @@ class WalletManagerCard extends Component {
   render () {
     return (
       <div className={styles.walletManager}>
-        <Card title='Wallet Manager'>
+        <Card className={styles.walletManagerCard}>
+          <h3><a href='#'>Wallet Manager</a></h3>
           <BlockButtonContainer>
-            <BlockButton onClick={this.props.showCreateModal}>Create</BlockButton>
-            <BlockButton onClick={this.props.showImportModal}>Import</BlockButton>
+            <BlockButton onClick={this.props.showCreateModal}>CREATE</BlockButton>
+            <BlockButton onClick={this.props.showImportModal}>IMPORT</BlockButton>
           </BlockButtonContainer>
         </Card>
       </div>
@@ -29,6 +30,7 @@ const BlockButton = styled.button`
   margin: 0.5rem 1rem;
   width: 11rem;
   height: 11rem;
+  font-size: 20px;
   background: transparent;
   color: #1890ff;
   border: 2px solid #1890ff;

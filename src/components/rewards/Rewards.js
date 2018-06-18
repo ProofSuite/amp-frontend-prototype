@@ -2,40 +2,43 @@ import React, { Component } from 'react'
 import RewardsContractState from './RewardsContractState'
 import WithdrawRewardsTxForm from './WithdrawRewardsTxForm'
 import PropTypes from 'prop-types'
-import { Tab } from 'semantic-ui-react'
+import { Tab, Tabs } from '@blueprintjs/core'
 
 class Rewards extends Component {
 
-  componentDidMount (props) {
+  state = {
+    tab: '1'
+  }
+
+  componentDidMount () {
     this.props.queryRewardsContractState()
+  }
+
+  handleChange = (value) => {
+    this.setState({ tab: value })
   }
 
   renderContractState = () => {
     return (
-      <Tab.Pane attached={false}>
         <RewardsContractState
           {...this.props.contractState}
         />
-      </Tab.Pane>
     )
   }
 
   renderWithdrawRewardsTxForm = () => {
     return (
-      <Tab.Pane attached={false}>
         <WithdrawRewardsTxForm />
-      </Tab.Pane>
     )
   }
 
   render () {
-    const panes = [
-      { menuItem: 'Contract State', render: this.renderContractState },
-      { menuItem: 'Withdraw Rewards', render: this.renderWithdrawRewardsTxForm }
-    ]
-
     return (
-      <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
+      <Tabs id='RewardsTabs' onChange={this.handleChange} selectedTabId={this.state.tab}>
+        <Tab id='1' title='Contract State' panel={this.renderContractState()} />
+        <Tab id='2' title='Rewards' panel={this.renderWithdrawRewardsTxForm()} />
+        <Tabs.Expander />
+      </Tabs>
     )
   }
 }

@@ -1,6 +1,6 @@
-import { getProviderUtils } from '../helpers/web3'
-import { getERC20Instance } from '../helpers/contractHelpers'
-import { formatCUSDColumn } from '../helpers/formatHelpers'
+import { getProvider, getProviderInfo } from '../helpers/providers'
+import { getERC20Instance } from '../helpers/contracts'
+import { formatCUSDColumn } from '../helpers/format'
 
 export const TOKEN_BALANCES_LOADING = 'TOKEN_BALANCES_LOADING'
 export const TOKEN_BALANCES_ERROR = 'TOKEN_BALANCES_ERROR'
@@ -9,9 +9,11 @@ export const UPDATE_TOKEN_BALANCES = 'UPDATE_TOKEN_BALANCES'
 export const DELETE_TOKEN_BALANCE = 'DELETE_TOKEN_BALANCE'
 
 export const tokenBalancesLoading = () => ({
-  type: TOKEN_BALANCES_LOADING })
+  type: TOKEN_BALANCES_LOADING
+})
 export const tokenBalancesError = () => ({
-  type: TOKEN_BALANCES_ERROR })
+  type: TOKEN_BALANCES_ERROR
+})
 export const updateTokenBalance = (address, cryptoDollarBalance) => ({
   type: UPDATE_TOKEN_BALANCE,
   payload: { address, cryptoDollarBalance }
@@ -27,8 +29,15 @@ export const updateTokenBalances = tokenBalances => ({
 export const queryTokenBalances = (...tokenAddresses) => async (dispatch, getState) => {
   try {
     dispatch(tokenBalancesLoading())
-    const provider = getProviderUtils(getState)
-    if (typeof provider.web3 === 'undefined') return dispatch(tokenBalancesError())
+    let { networkID } = getProviderInfo(getState)
+    if (typeof networkID === 'undefined') {
+      return dispatch(tokenBalancesError())
+    }
+
+    let provider = getProvider(getState)
+    if (typeof provider === 'undefined') {
+      return dispatch(tokenBalancesError())
+    }
 
     let accounts = getState().accounts.addresses
 
@@ -36,7 +45,7 @@ export const queryTokenBalances = (...tokenAddresses) => async (dispatch, getSta
     let tokenBalancesPromises = tokenAddresses.map(tokenAddress => {
       let erc20 = getERC20Instance(provider.web3, tokenAddress)
       let tokenBalances = accounts.map(account => {
-        let balancePromise = erc20.methods.balanceOf(account).call()
+        let balancePromise = erc20.balanceOf(account)
         return balancePromise
       })
       return tokenBalances

@@ -1,7 +1,7 @@
 import { Rewards } from 'proof-contracts-interfaces'
-import { getProviderUtils } from '../../helpers/web3'
 import accounting from 'accounting-js'
-import { getContractInstance } from '../../helpers/contractHelpers'
+import { getContractInstance } from '../../helpers/contracts'
+import { getProvider, getProviderInfo } from '../../helpers/providers'
 
 export const QUERYING_REWARDS_STATE = 'QUERYING_REWARDS_STATE'
 export const QUERY_REWARDS_STATE_ERROR = 'QUERY_REWARDS_STATE_ERROR'
@@ -16,20 +16,25 @@ export const queryRewardsContractState = () => {
     try {
       dispatch(queryingRewardsContract())
 
-      let provider = getProviderUtils(getState)
-      if (typeof provider.web3 === 'undefined') dispatch(rewardsContractCallError())
+      let { networkID } = getProviderInfo(getState)
+      if (typeof networkID === 'undefined') {
+        return dispatch(rewardsContractCallError('could not find networkID'))
+      }
+      let provider = getProvider(getState)
+      if (typeof provider === 'undefined') {
+        return dispatch(rewardsContractCallError('could not get provider'))
+      }
 
-      let rewards = getContractInstance(Rewards, provider)
+      let rewards = getContractInstance(Rewards, provider, networkID)
       let rewardsData = await Promise.all([
-        rewards.methods.getCurrentPoolIndex().call(),
-        rewards.methods.getCurrentEpoch().call(),
-        rewards.methods.getCurrentPoolBalance().call()
+        rewards.getCurrentPoolIndex(),
+        rewards.getCurrentEpoch(),
+        rewards.getCurrentPoolBalance()
       ])
-
       let [currentPoolIndex, currentEpoch, currentPoolBalance] = rewardsData
       let data = {
-        currentPoolIndex: currentPoolIndex,
-        currentEpoch: currentEpoch,
+        currentPoolIndex: currentPoolIndex.toNumber(),
+        currentEpoch: currentEpoch.toNumber(),
         currentPoolBalance: accounting.formatMoney(currentPoolBalance / 10e18, { symbol: 'ETH', format: '%v %s' })
       }
 

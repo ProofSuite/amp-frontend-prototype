@@ -1,6 +1,6 @@
 import { CryptoDollar, CryptoFiatHub, Rewards, Store } from 'proof-contracts-interfaces'
-import { getTruffleContractAddress } from '../helpers/contractHelpers'
-import { getProviderUtils } from '../helpers/web3'
+import { getTruffleContractAddress } from '../helpers/contracts'
+import { getProviderInfo } from '../helpers/providers'
 
 export const CONTRACT_ADDRESSES_LOADING = 'CONTRACT_ADDRESSES_LOADING'
 export const CONTRACT_ADDRESSES_ERROR = 'CONTRACT_ADDRESSES_ERROR'
@@ -12,6 +12,7 @@ export const contractAddressesError = error => ({
   type: CONTRACT_ADDRESSES_ERROR,
   payload: { error }
 })
+
 export const updateContractAddresses = contracts => ({
   type: UPDATE_CONTRACT_ADDRESSES,
   payload: { contracts }
@@ -20,9 +21,9 @@ export const updateContractAddresses = contracts => ({
 export const queryContractAddresses = () => async (dispatch, getState) => {
   dispatch(contractAddressesLoading())
 
-  let { networkID } = getProviderUtils(getState)
-  if (typeof web3 === 'undefined') {
-    return dispatch(contractAddressesError('could not instantiate web3 instance'))
+  let { networkID } = getProviderInfo(getState)
+  if (typeof networkID === 'undefined') {
+    return dispatch(contractAddressesError('could not retrieve network ID'))
   }
 
   let addresses = await Promise.all([

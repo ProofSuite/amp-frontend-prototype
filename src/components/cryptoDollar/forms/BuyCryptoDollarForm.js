@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-import { Header, Form } from 'semantic-ui-react'
+import { InputGroup, Button, Card } from '@blueprintjs/core'
 import PropTypes from 'prop-types'
-import GasSettings from '../../common/GasSettings'
-import TxNotification from '../../common/TxNotification'
-import TxValidityNotification from '../../common/TxValidityNotification'
+import GasSettings from '../../common/GasSettings/GasSettings'
+import TxNotification from '../../common/TxNotification/TxNotification'
 
 class BuyCryptoDollarForm extends Component {
   state = { value: '', gas: '', gasPrice: '', sender: '' }
@@ -31,41 +30,46 @@ class BuyCryptoDollarForm extends Component {
     const { status, statusMessage, requiredGas, hash, receipt } = this.props.txData
 
     return (
-      <div>
-        <Header as='h2'>Buy CryptoDollar</Header>
-        <Form onSubmit={this.handleSubmit} color='black'>
-            <Form.Input
-              placeholder='Message value'
-              name='value'
-              value={value}
-              onChange={this.handleChange}
-            />
-            <Form.Input
-              placeholder='Sender'
-              name='sender'
-              value={sender}
-              onChange={this.handleChange}
-            />
-            <TxValidityNotification
-              status={status}
-              requiredGas={requiredGas}
-              statusMessage={statusMessage}
-            />
-            <GasSettings
-              gas={gas}
-              requiredGas={requiredGas}
-              gasPrice={gasPrice}
-              handleChange={this.handleChange}
-            />
-            <TxNotification
-              loading={txLoading}
-              error={txError}
-              hash={hash}
-              receipt={receipt}
-            />
-          <Form.Button content='Send Transaction' inverted color='green' fluid/>
-        </Form>
-      </div>
+      <Card>
+          <InputGroup
+            large={true}
+            icon='filter'
+            placeholder='Message Value'
+            value={value}
+            onChange={this.handleChange}
+          />
+          <br/>
+          <InputGroup
+            large={true}
+            placeholder='Message Sender'
+            value={sender}
+            onChange={this.handleChange}
+          />
+          <br/>
+          <GasSettings
+            gas={gas}
+            requiredGas={requiredGas}
+            gasPrice={gasPrice}
+            handleChange={this.handleChange}
+          />
+          <TxNotification
+            status={status}
+            requiredGas={requiredGas}
+            statusMessage={statusMessage}
+            loading={txLoading}
+            error={txError}
+            hash={hash}
+            receipt={receipt}
+          />
+          <Button
+            text='Send Transaction'
+            intent='primary'
+            large={true}
+            type='submit'
+            fill
+            onClick={this.handleSubmit}
+          />
+      </Card>
     )
   }
 }

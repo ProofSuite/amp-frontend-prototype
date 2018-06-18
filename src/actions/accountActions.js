@@ -1,4 +1,5 @@
-import { getWeb3 } from '../helpers/web3'
+import { getProvider, getProviderInfo } from '../helpers/providers'
+import { accounts } from '../config'
 
 export const ACCOUNTS_LOADING = 'ACCOUNTS_LOADING'
 export const ACCOUNTS_ERROR = 'ACCOUNTS_ERROR'
@@ -17,12 +18,16 @@ export const deleteAccount = account => ({ type: DELETE_ACCOUNT, payload: { acco
 export const queryAccounts = () => async (dispatch, getState) => {
   try {
     dispatch(accountsLoading())
-    let web3 = getWeb3(getState)
-    if (typeof web3 === 'undefined') return accountsError()
-    let accounts = await web3.eth.getAccounts()
+
+    let { type } = getProviderInfo(getState)
+    if (typeof type === 'undefined') return accountsError('Could not get provider type')
+
+    let provider = getProvider(getState)
+    if (typeof provider === 'undefined') return accountsError('Could not get provider')
 
     dispatch(updateAccounts(accounts))
   } catch (error) {
     dispatch(accountsError(error.message))
   }
 }
+

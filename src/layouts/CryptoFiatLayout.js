@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import AccountBalancesContainer from '../components/accountBalances/AccountBalancesContainer'
 import WalletBalancesContainer from '../components/walletBalances/WalletBalancesContainer'
 import CryptoDollarContainer from '../components/cryptoDollar/CryptoDollarContainer'
 import ContractAddressesWidgetContainer from '../components/contractAddresses/ContractAddressesWidgetContainer'
@@ -11,13 +10,10 @@ import LoaderLayout from './LoaderLayout'
 import { queryAccounts } from '../actions/accountActions'
 import { queryWalletBalances } from '../components/walletBalances/actions'
 
-import styles from './CryptoFiatLayout.css'
+import styles from './CryptoFiatLayout.scss'
+import { getAccountsIsLoading } from '../selectors/'
 
 class CryptoFiatLayout extends Component {
-
-  state = {
-    renderLoading: true
-  }
 
   componentWillMount () {
     this.props.queryAccounts()
@@ -33,15 +29,12 @@ class CryptoFiatLayout extends Component {
           <div className={styles.rewards}>
             <RewardsFormContainer />
           </div>
-          <div className={styles.accountBalances}>
-            <AccountBalancesContainer />
-          </div>
           <div className={styles.walletBalances}>
-          <WalletBalancesContainer />
-        </div>
-        <div className={styles.contractAddresses}>
-          <ContractAddressesWidgetContainer />
-        </div>
+            <WalletBalancesContainer />
+          </div>
+          <div className={styles.contractAddresses}>
+            <ContractAddressesWidgetContainer />
+          </div>
       </div>
     )
   }
@@ -50,9 +43,7 @@ class CryptoFiatLayout extends Component {
     return <LoaderLayout />
   }
 
-  componentWillReceiveProps (newProps) {
-    let { web3Loading, web3Error, accountsLoading } = newProps
-    let loading = web3Loading || web3Error || accountsLoading
+  componentWillReceiveProps ({ loading }) {
     this.setState({ loading })
   }
 
@@ -60,7 +51,7 @@ class CryptoFiatLayout extends Component {
     return (
       <div>
       {
-        this.state.loading
+        this.props.loading
         ? this.renderLoading()
         : this.renderCryptoFiatLayout()
       }
@@ -71,9 +62,7 @@ class CryptoFiatLayout extends Component {
   }
 
 const mapStateToProps = state => ({
-  web3Loading: state.data.web3.loading,
-  web3Error: state.data.web3.error,
-  accountsLoading: state.data.accounts.status.loading
+  loading: getAccountsIsLoading(state)
 })
 
 const mapDispatchToProps = {
@@ -82,9 +71,7 @@ const mapDispatchToProps = {
 }
 
 CryptoFiatLayout.propTypes = {
-  web3Loading: PropTypes.bool,
-  web3Error: PropTypes.string,
-  accountsLoading: PropTypes.bool,
+  loading: PropTypes.bool,
   queryAccounts: PropTypes.func,
   queryWalletBalances: PropTypes.func
 }

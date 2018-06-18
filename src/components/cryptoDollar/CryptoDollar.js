@@ -4,62 +4,56 @@ import SellCryptoDollarTxForm from './txForms/SellCryptoDollarTxForm'
 import SellUnpeggedCryptoDollarTxForm from './txForms/SellUnpeggedCryptoDollarTxForm'
 import TransferCryptoDollarTxForm from './txForms/TransferCryptoDollarTxForm'
 import CryptoDollarContractState from './CryptoDollarContractState'
+import { Tabs, Tab } from '@blueprintjs/core'
 import PropTypes from 'prop-types'
-import { Tab } from 'semantic-ui-react'
 
 class CryptoDollar extends Component {
 
-  componentDidMount (props) {
+  state = {
+    tab: '1'
+  }
+
+  componentDidMount () {
     this.props.queryCryptoDollarContractState()
+  }
+
+  handleChange = (value) => {
+    this.setState({ tab: value })
   }
 
   renderContractState = () => {
     const { error, data } = this.props.contractState
     return (
-      <Tab.Pane attached={false}>
-        <CryptoDollarContractState
-          error={error}
-          data={data}
-        />
-      </Tab.Pane>
+        <CryptoDollarContractState error={error} data={data} />
     )
   }
 
   renderBuyCryptoDollarTxForm = () => (
-      <Tab.Pane attached={false}>
         <BuyCryptoDollarTxForm/>
-      </Tab.Pane>
   )
 
   renderSellCryptoDollarTxForm = () => (
-    <Tab.Pane attached={false}>
       <SellCryptoDollarTxForm/>
-    </Tab.Pane>
   )
 
   renderSellUnpeggedCryptoDollarTxForm = () => (
-    <Tab.Pane attached={false}>
       <SellUnpeggedCryptoDollarTxForm/>
-    </Tab.Pane>
   )
 
   renderTransferCryptoDollarTxForm = () => (
-    <Tab.Pane attached={false}>
       <TransferCryptoDollarTxForm/>
-    </Tab.Pane>
   )
 
   render () {
-    const panes = [
-      { menuItem: 'Contract State', render: this.renderContractState },
-      { menuItem: 'Buy', render: this.renderBuyCryptoDollarTxForm },
-      { menuItem: 'Sell', render: this.renderSellCryptoDollarTxForm },
-      { menuItem: 'Sell (unpegged)', render: this.renderSellUnpeggedCryptoDollarTxForm },
-      { menuItem: 'Transfer', render: this.renderTransferCryptoDollarTxForm }
-    ]
-
     return (
-      <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
+      <Tabs id='CryptoDollarTab' onChange={this.handleChange} selectedTabId={this.state.tab}>
+        <Tab id='1' title='Contract State' panel={this.renderContractState()} />
+        <Tab id='2' title='Buy' panel={this.renderBuyCryptoDollarTxForm()} />
+        <Tab id='3' title='Sell' panel={this.renderSellCryptoDollarTxForm()} />
+        <Tab id='4' title='Sell (Unpegged)' panel={this.renderSellUnpeggedCryptoDollarTxForm()} />
+        <Tab id='5' title='Transfer' panel={this.renderTransferCryptoDollarTxForm()} />
+        <Tabs.Expander />
+      </Tabs>
     )
   }
 }

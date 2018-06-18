@@ -1,2 +1,3 @@
+export const getAccountsIsLoading = state => state.status.loading
 export const getAccountsStatus = state => state.status
-export const getAccounts = state => state.addresses
+export const getAccountsAddresses = state => state.addresses

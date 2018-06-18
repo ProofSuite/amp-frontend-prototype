@@ -3,38 +3,43 @@ import DEXLayout from '../layouts/DEXLayout'
 import CryptoFiatLayout from '../layouts/CryptoFiatLayout'
 import SettingsLayout from '../layouts/SettingsLayout'
 import TestLayout from '../layouts/TestLayout'
+import WalletLayout from '../layouts/WalletLayout'
+import TableLayout from '../layouts/TableLayout'
 import PropTypes from 'prop-types'
 
 import { hot } from 'react-hot-loader'
 import { Route, Switch, BrowserRouter } from 'react-router-dom'
 
-// import { createBrowserHistory } from 'history'
-// import { syncHistoryWithStore } from 'react-router-redux'
-// import store from '../redux-store'
-// const history = syncHistoryWithStore(createBrowserHistory(), store)
+import '@blueprintjs/core/lib/css/blueprint.css?global'
+import '@blueprintjs/table/lib/css/table.css?global'
+import '../styles/global.scss?global'
+import '../styles/styles.scss?global'
 
-import 'semantic-ui-css/semantic.min.css?global'
-import 'antd/dist/antd.css?global'
 import NavBar from '../components/common/NavBar'
 
 class App extends Component {
 
   componentDidMount () {
-    this.props.initializeWeb3()
     this.props.queryAccounts()
   }
 
   render () {
     return (
       <BrowserRouter>
-        <div>
-        <NavBar />
-        <Switch>
-          <Route exact path='/' component={CryptoFiatLayout}/>
-          <Route path='/dex' component={DEXLayout}/>
-          <Route path='/settings' component={SettingsLayout}/>
-          <Route path='/test' component={TestLayout} />
-        </Switch>
+      <div>
+        <div className='pt-dark'>
+          <NavBar />
+          <div style={{ 'marginTop': '45px' }} >
+          <Switch>
+            <Route exact path='/' component={WalletLayout}/>
+            <Route path='/cryptofiat' component={CryptoFiatLayout}/>
+            <Route path='/dex' component={DEXLayout}/>
+            <Route path='/settings' component={SettingsLayout}/>
+            <Route path='/test' component={TestLayout} />
+            <Route path='/table' component={TableLayout} />
+          </Switch>
+          </div>
+          </div>
         </div>
       </BrowserRouter>
     )
@@ -42,8 +47,8 @@ class App extends Component {
 }
 
 App.propTypes = {
-  initializeWeb3: PropTypes.func,
   queryAccounts: PropTypes.func
 }
 
 export default hot(module)(App)
+

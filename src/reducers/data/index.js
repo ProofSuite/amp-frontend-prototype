@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
-import web3Reducer from './web3'
 import providersReducer from './providers'
 import accountsReducer from './accounts'
 import tokenReducer from './token'
@@ -13,7 +12,6 @@ import contractAddressesReducer from './contractAddresses'
 import walletReducer from './wallet'
 
 const dataReducer = combineReducers({
-  web3: web3Reducer,
   provider: providersReducer,
   routing: routerReducer,
   accounts: accountsReducer,

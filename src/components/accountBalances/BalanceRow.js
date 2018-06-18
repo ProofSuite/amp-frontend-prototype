@@ -1,12 +1,11 @@
 import React from 'react'
-import { Table } from 'semantic-ui-react'
 
 const BalanceRow = (props) => {
-  const cells = Object.keys(props).map((variable) => <Table.Cell key={variable}>{props[variable]}</Table.Cell>)
+  const cells = Object.keys(props).map((variable) => <td key={variable}>{props[variable]}</td>)
   return (
-    <Table.Row>
+    <tr>
       {cells}
-    </Table.Row>
+    </tr>
   )
 }
 

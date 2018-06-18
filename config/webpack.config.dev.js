@@ -106,6 +106,15 @@ module.exports = {
             ]
           },
           {
+            test: /\.scss$/,
+            resourceQuery: /^\?global$/,
+            use: [
+              require.resolve('style-loader'),
+              require.resolve('css-loader'),
+              require.resolve('sass-loader')
+            ]
+          },
+          {
             test: /\.css$/,
             use: ExtractTextPlugin.extract({
               fallback: 'style-loader',
@@ -124,6 +133,7 @@ module.exports = {
           },
           {
             test: /\.scss$/,
+            include: paths.appComponents,
             use: ExtractTextPlugin.extract({
               fallback: 'style-loader',
               use: [
@@ -136,7 +146,20 @@ module.exports = {
                     localIdentName: '[name]__[local]__[hash:base64:5]'
                   }
                 },
-                'sass-loader'
+                'sass-loader',
+                'postcss-loader'
+              ]
+            })
+          },
+          {
+            test: /\.scss$/,
+            include: paths.appStyles,
+            use: ExtractTextPlugin.extract({
+              fallback: 'style-loader',
+              use: [
+                require.resolve('style-loader'),
+                require.resolve('css-loader'),
+                require.resolve('sass-loader')
               ]
             })
           },

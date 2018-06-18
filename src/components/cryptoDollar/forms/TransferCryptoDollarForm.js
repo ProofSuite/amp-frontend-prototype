@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { Header, Form } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
-import GasSettings from '../../common/GasSettings'
-import TxNotification from '../../common/TxNotification'
-import TxValidityNotification from '../../common/TxValidityNotification'
+import GasSettings from '../../common/GasSettings/GasSettings'
+import TxNotification from '../../common/TxNotification/TxNotification'
+
+import { InputGroup, Card, Button } from '@blueprintjs/core'
 
 class TransferCryptoDollarForm extends Component {
   state = { sender: '', receiver: '', amount: '', gas: '', gasPrice: '' }
@@ -31,32 +31,29 @@ class TransferCryptoDollarForm extends Component {
     const { status, statusMessage, requiredGas, hash, receipt } = this.props.txData
 
     return (
-      <div>
-        <Header as='h2'>Transfer CryptoDollar CryptoDollar</Header>
-        <Form onSubmit={this.handleSubmit} color='black'>
-            <Form.Input
-              placeholder='Transfer Amount'
+      <Card>
+        <h3>Transfer CryptoDollar CryptoDollar</h3>
+        <InputGroup
+              placeholder='Message amount'
               name='amount'
               value={amount}
               onChange={this.handleChange}
             />
-            <Form.Input
+            <br/>
+            <InputGroup
               placeholder='Sender'
               name='sender'
               value={sender}
               onChange={this.handleChange}
             />
-            <Form.Input
+            <br/>
+            <InputGroup
               placeholder='Receiver'
               name='receiver'
               value={receiver}
               onChange={this.handleChange}
             />
-            <TxValidityNotification
-              status={status}
-              requiredGas={requiredGas}
-              statusMessage={statusMessage}
-            />
+            <br/>
             <GasSettings
               gas={gas}
               requiredGas={requiredGas}
@@ -64,14 +61,24 @@ class TransferCryptoDollarForm extends Component {
               handleChange={this.handleChange}
             />
             <TxNotification
+              status={status}
+              requiredGas={requiredGas}
+              statusMessage={statusMessage}
               loading={txLoading}
               error={txError}
               hash={hash}
               receipt={receipt}
             />
-          <Form.Button content='Send Transaction' inverted color='green' fluid/>
-        </Form>
-      </div>
+            <br/>
+            <Button
+              text='Send Transaction'
+              intent='primary'
+              large={true}
+              type='submit'
+              fill
+              onClick={this.handleSubmit}
+            />
+        </Card>
     )
   }
 }

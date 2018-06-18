@@ -1,9 +1,9 @@
-import { getProviderUtils } from '../../helpers/web3'
 import { CryptoDollar } from 'proof-contracts-interfaces'
-import { getContractInstance } from '../../helpers/contractHelpers'
+import { getContractInstance } from '../../helpers/contracts'
 import { updateCryptoDollarBalances } from '../../actions/cryptoDollarBalancesActions'
 import { updateEtherBalances } from '../../actions/etherBalancesActions'
-import { formatEtherColumn, formatCUSDColumn } from '../../helpers/formatHelpers'
+import { formatEtherColumn, formatCUSDColumn } from '../../helpers/format'
+import { getProvider, getProviderInfo } from '../../helpers/providers'
 
 export const WALLET_BALANCES_LOADING = 'WALLET_BALANCES_LOADING'
 export const WALLET_BALANCES_UPDATED = 'WALLET_BALANCES_UPDATED'
@@ -16,15 +16,22 @@ export const walletBalancesError = (error) => ({ type: WALLET_BALANCES_ERROR, pa
 export const queryWalletBalances = walletBalances => async (dispatch, getState) => {
   try {
     dispatch(walletBalancesLoading())
-    const provider = getProviderUtils(getState)
-    if (typeof provider.web3 === 'undefined') return dispatch(walletBalancesError('Could not instantiate web3'))
+
+    let { networkID } = getProviderInfo(getState)
+    if (typeof networkID === 'undefined') {
+      return dispatch(walletBalancesError('could not find networkID'))
+    }
+    let provider = getProvider(getState)
+    if (typeof provider === 'undefined') {
+      return dispatch(walletBalancesError('could not get provider'))
+    }
 
     let wallets = getState().data.wallets.allAddresses
-    let cryptoDollar = getContractInstance(CryptoDollar, provider)
+    let cryptoDollar = getContractInstance(CryptoDollar, provider, networkID)
 
-    let cryptoDollarBalancesCalls = wallets.map((wallet) => cryptoDollar.methods.balanceOf(wallet).call())
-    let reservedEtherBalancesCalls = wallets.map((wallet) => cryptoDollar.methods.reservedEther(wallet).call())
-    let etherBalancesCalls = wallets.map((wallet) => provider.web3.eth.getBalance(wallet))
+    let cryptoDollarBalancesCalls = wallets.map((wallet) => cryptoDollar.balanceOf(wallet))
+    let reservedEtherBalancesCalls = wallets.map((wallet) => cryptoDollar.reservedEther(wallet))
+    let etherBalancesCalls = wallets.map((wallet) => provider.getBalance(wallet))
 
     let cryptoDollarBalances = await Promise.all(cryptoDollarBalancesCalls)
     let reservedEtherBalances = await Promise.all(reservedEtherBalancesCalls)

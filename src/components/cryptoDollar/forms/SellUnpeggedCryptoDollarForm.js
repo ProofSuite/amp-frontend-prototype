@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-import { Header, Form } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
-import GasSettings from '../../common/GasSettings'
-import TxNotification from '../../common/TxNotification'
-import TxValidityNotification from '../../common/TxValidityNotification'
+import GasSettings from '../../common/GasSettings/GasSettings'
+import TxNotification from '../../common/TxNotification/TxNotification'
+import { InputGroup, Card, Button } from '@blueprintjs/core'
 
 class SellUnpeggedCryptoDollarForm extends Component {
   state = { tokens: '', gas: '', gasPrice: '', sender: '' }
@@ -31,26 +30,22 @@ class SellUnpeggedCryptoDollarForm extends Component {
     const { status, statusMessage, requiredGas, hash, receipt } = this.props.txData
 
     return (
-      <div>
-        <Header as='h2'>Sell CryptoDollar (unpegged)</Header>
-        <Form onSubmit={this.handleSubmit} color='black'>
-            <Form.Input
+      <Card>
+        <h3>Sell CryptoDollar (unpegged)</h3>
+            <InputGroup
               placeholder='Number of tokens'
               name='tokens'
               value={tokens}
               onChange={this.handleChange}
             />
-            <Form.Input
+            <br/>
+            <InputGroup
               placeholder='Sender'
               name='sender'
               value={sender}
               onChange={this.handleChange}
             />
-            <TxValidityNotification
-              status={status}
-              requiredGas={requiredGas}
-              statusMessage={statusMessage}
-            />
+            <br/>
             <GasSettings
               gas={gas}
               requiredGas={requiredGas}
@@ -58,14 +53,23 @@ class SellUnpeggedCryptoDollarForm extends Component {
               handleChange={this.handleChange}
             />
             <TxNotification
+              status={status}
+              requiredGas={requiredGas}
+              statusMessage={statusMessage}
               loading={txLoading}
               error={txError}
               hash={hash}
               receipt={receipt}
             />
-          <Form.Button content='Send Transaction' inverted color='green' fluid/>
-        </Form>
-      </div>
+            <Button
+              text='Send Transaction'
+              intent='primary'
+              large={true}
+              type='submit'
+              fill
+              onClick={this.handleSubmit}
+            />
+      </Card>
     )
   }
 }

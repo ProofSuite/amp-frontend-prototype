@@ -1,0 +1,54 @@
+@import "~@blueprintjs/core/src/common/colors";
+@import "~@blueprintjs/core/src/common/color-aliases";
+@import "~@blueprintjs/core/lib/scss/variables";
+@import "~@blueprintjs/core/src/blueprint";
+
+.blue-font {
+  color: $pt-dark-link-color;
+}
+
+.blue-h1 {
+  @include header-typography();
+  font-size: 36px;
+  line-height: 40px;
+  color: $pt-dark-link-color;
+}
+
+.blue-h2 {
+  @include header-typography();
+  font-size: 28px;
+  line-height: 32px;
+  color: $pt-dark-link-color;
+}
+
+.blue-h3 {
+  @include header-typography();
+  font-size: 22px;
+  line-height: 25px;
+  color: $pt-dark-link-color;
+}
+
+.blue-h4 {
+  @include header-typography();
+  font-size: 18px;
+  line-height: 21px;
+  color: $pt-dark-link-color;
+}
+
+.blue-h5 {
+  @include header-typography();
+  font-size: 16px;
+  line-height: 19px;
+  color: $pt-dark-link-color;
+}
+
+.blue-h6 {
+  @include header-typography();
+  font-size: 14px;
+  line-height: 16px;
+  color: $pt-dark-link-color;
+}
+
+
+
+

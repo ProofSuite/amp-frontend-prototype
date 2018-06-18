@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Button, Table } from 'antd'
-import styles from '../../layouts/SettingsLayout.css'
+import { Button } from 'antd'
+import { Table, Column, Cell, SelectionModes } from '@blueprintjs/table'
 
+import styles from '../../layouts/SettingsLayout.scss'
 import styled from 'styled-components'
 
 class WalletTable extends Component {
@@ -10,6 +11,8 @@ class WalletTable extends Component {
   render () {
     const { selectedWallets, deleteWallet, onSelectWallet, onSelectDefaultWallet, walletList } = this.props
     const rowSelection = { selectedRowKeys: selectedWallets, onChange: onSelectWallet }
+
+    const cellRenderer = (rowIndex) => <Cell>{walletList[rowIndex].wallet}</Cell>
 
     const columns = [
       {
@@ -31,11 +34,18 @@ class WalletTable extends Component {
             </Button>
           </Button.Group>
         </WalletTableButtons>
+
         <Table
-          rowSelection={rowSelection}
-          columns={columns}
-          dataSource={walletList}
-        />
+          numRows={walletList.length}
+          enableColumnReordering={true}
+          enableColumnResizing={false}
+          enableRowReordering={true}
+          enableRowResizing={false}
+          columnWidths={[500]}
+          selectionModes={SelectionModes.ROWS_ONLY}
+        >
+          <Column key='1' name='Wallet' cellRenderer={cellRenderer} />
+        </Table>
       </div>
     )
   }

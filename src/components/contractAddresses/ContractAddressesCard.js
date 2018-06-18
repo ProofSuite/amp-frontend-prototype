@@ -1,29 +1,23 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Card, Header, Table } from 'semantic-ui-react'
+import { Card } from '@blueprintjs/core'
 
 const ContractAddressesCard = ({ contracts }) => {
   const contractList = Object.keys(contracts).map(name => (
-      <Table.Row key={name}>
-        <Table.Cell>{name}</Table.Cell>
-        <Table.Cell>{contracts[name]}</Table.Cell>
-      </Table.Row>
+      <tr key={name}>
+        <td>{name}</td>
+        <td>{contracts[name]}</td>
+      </tr>
   ))
 
   return (
     <Card fluid>
-      <Card.Content>
-        <Card.Header>
-          <Header as='h3'>Contract Addresses</Header>
-        </Card.Header>
-        <Card.Description>
-          <Table basic='very'>
-            <Table.Body>
+      <h3>Contract Addresses</h3>
+          <table className='pt-html-table pt-interactive pt-html-table-striped'>
+            <tbody>
               {contractList}
-            </Table.Body>
-          </Table>
-        </Card.Description>
-      </Card.Content>
+            </tbody>
+          </table>
     </Card>
   )
 }

@@ -12,38 +12,29 @@ export const setCustomProvider = (providerOptions) => dispatch => {
     switch (providerOptions.provider) {
       case 'metamask':
         options = {
-          type: 'injected',
-          url: 'http://127.0.0.1:8545', // not sure if necessary
-          networkID: 8888, // not sure if necessary
-          websockets: false,
-          legacy: true
+          type: 'metamask',
+          networkID: 8888 // not sure if necessary
         }
         return dispatch(setProvider(options))
       case 'local':
         options = {
           type: 'local',
-          url: 'ws://127.0.0.1:8546',
-          networkID: 8888,
-          websockets: true,
-          legacy: false
+          url: 'http://127.0.0.1:8545',
+          networkID: 8888
         }
         return dispatch(setProvider(options))
       case 'infura':
         options = {
           type: 'remote',
           url: 'wss://mainnet.infura.io/ws',
-          networkID: 8888,
-          websockets: true,
-          legacy: false
+          networkID: 8888
         }
         return dispatch(setProvider(options))
       case 'infura (rinkeby)':
         options = {
           type: 'infura',
           url: 'wss://rinkeby.infura.io/_ws',
-          networkID: 4,
-          websockets: true,
-          legacy: false
+          networkID: 4
         }
         return dispatch(setProvider(options))
       case 'custom':

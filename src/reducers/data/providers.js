@@ -3,27 +3,44 @@ import {
 } from '../../actions/providerActions'
 
 // const localRPCProvider = {
-//   type: 'local',   // local, infura, remote, injected, ledger
+//   type: 'local',   // local, infura, remote, metamask, ledger
 //   url: 'localhost:8545',
 //   networkID: 8888,
 //   websockets: false,
 //   legacy: false
 // }
 
+const localRPCProvider = {
+  type: 'local',
+  url: 'http://127.0.0.1:8545',
+  networkID: 8888,
+  networkName: ''
+}
+
 const localWebsocketRPCProvider = {
   type: 'local',
   url: 'ws://127.0.0.1:8546',
   networkID: 8888,
-  websockets: true,
-  legacy: false
+  networkName: ''
 }
 
 const rinkebyInfuraWebsocketProvider = {
   type: 'infura',
   url: 'wss://rinkeby.infura.io/_ws',
   networkID: 4,
-  websockets: true,
-  legacy: false
+  networkName: 'rinkeby'
+}
+
+const testingMetamaskProvider = {
+  type: 'metamask',
+  networkID: 8888,
+  networkName: ''
+}
+
+const rinkebyMetamaskProvider = {
+  type: 'metamask',
+  networkID: 4,
+  networkName: 'rinkeby'
 }
 
 // const metamaskProvider = {
@@ -32,7 +49,7 @@ const rinkebyInfuraWebsocketProvider = {
 //   legacy: false
 // }
 
-const providers = (state = localWebsocketRPCProvider, action) => {
+const providers = (state = localRPCProvider, action) => {
   let { type, payload } = action
   switch (type) {
     case SET_PROVIDER:
@@ -41,8 +58,7 @@ const providers = (state = localWebsocketRPCProvider, action) => {
         type: payload.options.type || state.type,
         url: payload.options.url || state.url,
         networkID: payload.options.networkID || state.networkID,
-        websockets: payload.options.websockets || state.websockets,
-        legacy: payload.options.legacy || state.legacy
+        networkName: payload.options.networkName || state.networkName
       }
     default:
       return state

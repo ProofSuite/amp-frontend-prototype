@@ -1,23 +1,23 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { Header, Table } from 'semantic-ui-react'
+import { Card } from '@blueprintjs/core'
 
 class CryptoDollarContractState extends PureComponent {
   renderContractState (data) {
     const dataList = Object.keys(data).map((variable) => (
-      <Table.Row key={variable}>
-        <Table.Cell>{variable}</Table.Cell>
-        <Table.Cell>{data[variable]}</Table.Cell>
-      </Table.Row>
+      <tr key={variable}>
+        <td>{variable}</td>
+        <td>{data[variable]}</td>
+      </tr>
     ))
 
     return (
-      <div>
-        <Header>CryptoDollar Contract State</Header>
-        <Table basic='very'>
-          <Table.Body>{dataList}</Table.Body>
-        </Table>
-      </div>
+      <Card>
+        <h3>CryptoDollar Contract State</h3>
+        <table>
+          <tbody>{dataList}</tbody>
+        </table>
+      </Card>
     )
   }
 

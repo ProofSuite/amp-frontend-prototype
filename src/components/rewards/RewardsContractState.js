@@ -1,26 +1,26 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Table, Header } from 'semantic-ui-react'
+import { Card } from '@blueprintjs/core'
 
 const RewardsContractState = ({ data }) => {
   const dataList = Object.keys(data).map(variable => (
       (
-        <Table.Row key={variable}>
-          <Table.Cell>{variable}</Table.Cell>
-          <Table.Cell>{data[variable]}</Table.Cell>
-        </Table.Row>
+        <tr key={variable}>
+          <td>{variable}</td>
+          <td>{data[variable]}</td>
+        </tr>
       )
   ))
 
   return (
-    <div>
-      <Header>Rewards Contract State</Header>
-      <Table basic='very'>
-        <Table.Body>
+    <Card>
+      <h3>Rewards Contract State</h3>
+      <table className='pt-html-table pt-interactive'>
+        <tbody>
           {dataList}
-        </Table.Body>
-      </Table>
-    </div>
+        </tbody>
+      </table>
+    </Card>
   )
 }
 

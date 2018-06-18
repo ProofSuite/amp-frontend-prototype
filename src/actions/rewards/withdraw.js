@@ -1,4 +1,4 @@
-import { getProviderUtils, getWeb3 } from '../../helpers/web3'
+
 import { withdrawRewardsRawTx, withdrawRewardsSignedTx } from '../../helpers/tx'
 import { walletAuthenticated, walletAuthenticationError, walletAuthenticating } from '../walletActions'
 
@@ -52,113 +52,113 @@ export const withdrawRewardsTxConfirmed = confirmationNumber => ({
 
 export const validateWithdrawRewardsTx = ({ sender, value, gas, gasPrice }) => {
   return async (dispatch, getState) => {
-    try {
-      gasPrice = gasPrice || 2 * 10e9
-      gas = gas || 0
+    // try {
+    //   gasPrice = gasPrice || 2 * 10e9
+    //   gas = gas || 0
 
-      let provider = getProviderUtils(getState)
-      let rawTx = await withdrawRewardsRawTx(provider)
-      let params = { from: sender, value: value * 10e18, gasPrice }
-      let notification = await validateTransaction(rawTx, params, gas)
+    //   let provider = getProviderUtils(getState)
+    //   let rawTx = await withdrawRewardsRawTx(provider)
+    //   let params = { from: sender, value: value * 10e18, gasPrice }
+    //   let notification = await validateTransaction(rawTx, params, gas)
 
-      return dispatch(withdrawRewardsTxUpdated(notification))
-    } catch (error) {
-      let notification = { status: 'invalid', statusMessage: error.message }
-      return dispatch(withdrawRewardsTxUpdated(notification))
-    }
+    //   return dispatch(withdrawRewardsTxUpdated(notification))
+    // } catch (error) {
+    //   let notification = { status: 'invalid', statusMessage: error.message }
+    //   return dispatch(withdrawRewardsTxUpdated(notification))
+    // }
   }
 }
 
 export const signWithdrawRewardsTx = (wallet, password, { sender, gas, gasPrice }) => {
   return async (dispatch, getState) => {
-    let provider, decryptedWallet, sender, privateKey
+    // let provider, decryptedWallet, sender, privateKey
 
-    try {
-      provider = getProviderUtils(getState)
-      if (typeof provider.web3 === 'undefined') throw new Error('Provider not found')
-    } catch (error) {
-      return console.log(error.message)
-    }
+    // try {
+    //   provider = getProviderUtils(getState)
+    //   if (typeof provider.web3 === 'undefined') throw new Error('Provider not found')
+    // } catch (error) {
+    //   return console.log(error.message)
+    // }
 
-    try {
-      dispatch(walletAuthenticating())
-      decryptedWallet = await decryptWallet(wallet.serialized, password)
-      privateKey = decryptedWallet.privateKey
-      sender = decryptedWallet.address
-      dispatch(walletAuthenticated())
-    } catch (error) {
-      dispatch(walletAuthenticationError(error.message))
-    }
+    // try {
+    //   dispatch(walletAuthenticating())
+    //   decryptedWallet = await decryptWallet(wallet.serialized, password)
+    //   privateKey = decryptedWallet.privateKey
+    //   sender = decryptedWallet.address
+    //   dispatch(walletAuthenticated())
+    // } catch (error) {
+    //   dispatch(walletAuthenticationError(error.message))
+    // }
 
-    try {
-      dispatch(withdrawRewardsTxSigning())
-      gasPrice = gasPrice || 2 * 10e9
-      gas = gas || 0
-      let txParams = { gas, gasPrice }
-      let { rawTransaction } = await withdrawRewardsSignedTx(provider, sender, privateKey, txParams)
-      dispatch(withdrawRewardsTxSigned(rawTransaction))
-    } catch (error) {
-      dispatch(withdrawRewardsTxSigningError(error.message))
-    }
+    // try {
+    //   dispatch(withdrawRewardsTxSigning())
+    //   gasPrice = gasPrice || 2 * 10e9
+    //   gas = gas || 0
+    //   let txParams = { gas, gasPrice }
+    //   let { rawTransaction } = await withdrawRewardsSignedTx(provider, sender, privateKey, txParams)
+    //   dispatch(withdrawRewardsTxSigned(rawTransaction))
+    // } catch (error) {
+    //   dispatch(withdrawRewardsTxSigningError(error.message))
+    // }
   }
 }
 
 export const sendWithdrawRewardsTx = ({ sender, value, gas, gasPrice = 2 * 10e9 }) => {
   return async (dispatch, getState) => {
-    try {
-      let web3 = getWeb3(getState)
-      if (typeof web3 === 'undefined') throw new Error('Provider not found')
-      if (!sender) throw new Error('Sender Address not provided')
-      if (!value) throw new Error('Token Amount not provided')
+    // try {
+    //   let web3 = getWeb3(getState)
+    //   if (typeof web3 === 'undefined') throw new Error('Provider not found')
+    //   if (!sender) throw new Error('Sender Address not provided')
+    //   if (!value) throw new Error('Token Amount not provided')
 
-      dispatch(withdrawRewardsTxStarted)
+    //   dispatch(withdrawRewardsTxStarted)
 
-      let rawTx = await withdrawRewardsRawTx(web3)
-      let params = { from: sender, value: value * 1e18, gasPrice, gas }
+    //   let rawTx = await withdrawRewardsRawTx(web3)
+    //   let params = { from: sender, value: value * 1e18, gasPrice, gas }
 
-      rawTx
-        .send(params)
-        .on('transactionHash', hash => {
-          dispatch(withdrawRewardsTxSent(hash))
-        })
-        .on('receipt', receipt => {
-          if (receipt.status === '0x0') {
-            dispatch(withdrawRewardsTxError('Transaction Failed', receipt))
-          } else {
-            dispatch(withdrawRewardsTxReceipt(receipt))
-          }
-        })
-        .on('error', error => {
-          dispatch(withdrawRewardsTxError(error.message, null))
-        })
-    } catch (error) {
-      dispatch(withdrawRewardsTxError(error.message, null))
-    }
+    //   rawTx
+    //     .send(params)
+    //     .on('transactionHash', hash => {
+    //       dispatch(withdrawRewardsTxSent(hash))
+    //     })
+    //     .on('receipt', receipt => {
+    //       if (receipt.status === '0x0') {
+    //         dispatch(withdrawRewardsTxError('Transaction Failed', receipt))
+    //       } else {
+    //         dispatch(withdrawRewardsTxReceipt(receipt))
+    //       }
+    //     })
+    //     .on('error', error => {
+    //       dispatch(withdrawRewardsTxError(error.message, null))
+    //     })
+    // } catch (error) {
+    //   dispatch(withdrawRewardsTxError(error.message, null))
+    // }
   }
 }
 
 export const sendSignedWithdrawRewardsTx = (signedTx) => {
   return async (dispatch, getState) => {
-    try {
-      let signedTx = getState().ui.withdrawRewards.tx.signature
-      let web3 = getWeb3(getState)
-      if (typeof web3 === 'undefined') throw new Error('Provider not found')
-      if (!signedTx) throw new Error('Signed Tx missing')
+    // try {
+    //   let signedTx = getState().ui.withdrawRewards.tx.signature
+    //   let web3 = getWeb3(getState)
+    //   if (typeof web3 === 'undefined') throw new Error('Provider not found')
+    //   if (!signedTx) throw new Error('Signed Tx missing')
 
-      dispatch(withdrawRewardsTxStarted)
-      web3.eth.sendSignedTransaction(signedTx)
-        .on('transactionHash', hash => {
-          dispatch(withdrawRewardsTxSent(hash))
-        })
-        .on('receipt', receipt => {
-          if (receipt.status === '0x0') {
-            dispatch(withdrawRewardsTxError('Transaction Failed', receipt))
-          } else {
-            dispatch(withdrawRewardsTxReceipt(receipt))
-          }
-        })
-    } catch (error) {
-      dispatch(withdrawRewardsTxError(error.message, null))
-    }
+    //   dispatch(withdrawRewardsTxStarted)
+    //   web3.eth.sendSignedTransaction(signedTx)
+    //     .on('transactionHash', hash => {
+    //       dispatch(withdrawRewardsTxSent(hash))
+    //     })
+    //     .on('receipt', receipt => {
+    //       if (receipt.status === '0x0') {
+    //         dispatch(withdrawRewardsTxError('Transaction Failed', receipt))
+    //       } else {
+    //         dispatch(withdrawRewardsTxReceipt(receipt))
+    //       }
+    //     })
+    // } catch (error) {
+    //   dispatch(withdrawRewardsTxError(error.message, null))
+    // }
   }
 }

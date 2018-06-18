@@ -1,111 +1,124 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Form, Input, Button, Radio, Switch, Select } from 'antd'
+import { Radio, RadioGroup, Switch, Button, InputGroup } from '@blueprintjs/core'
+import NetworkSelect from './NetworkSelect'
 
-class ProviderSettings extends Component {
-
+class ProviderSettingsForm extends Component {
   state = {
     loading: false,
-    expand: false
+    expand: false,
+    form: {
+      provider: '',
+      type: '',
+      websockets: false,
+      network: null,
+      url: ''
+    }
   }
 
-  handleSubmit = (e) => {
+  handleSubmit = e => {
     e.preventDefault()
     this.disableButton()
-    this.props.form.validateFields((err, values) => {
-      if (err) console.log(err)
-      this.props.setCustomProvider(values)
-    })
+    console.log(e)
+    this.props.setCustomProvider(this.state.form)
   }
 
-  onProviderChange = (e) => {
-    this.setState({ expand: e.target.value === 'custom' })
+  handleChange = e => {
+    console.log(e)
+    const target = e.target
+    const value = target.type === 'checkbox' ? target.checked : target.value
+    const name = target.name
+    this.setState({ ...this.state, form: { ...this.state.form, [name]: value } })
+  }
+
+  handleSelectChange = e => {
+    this.setState({ ...this.state, form: { ...this.state.form, network: e } })
   }
 
   disableButton = () => {
     this.setState({ loading: true })
-    setTimeout(() => { this.setState({ loading: false }) }, 3000)
+    setTimeout(() => {
+      this.setState({ loading: false })
+    }, 3000)
   }
 
   renderCustomProviderForm () {
-    const { getFieldDecorator } = this.props.form
-
     return (
       <div>
-      <Form.Item label='Provider Type'>
-        {getFieldDecorator('type')(
-          <Radio.Group>
-            <Radio style={radioStyle} value='metamask'>Metamask</Radio>
-            <Radio style={radioStyle} value='local'>Local</Radio>
-            <Radio style={radioStyle} value='remote'>Remote</Radio>
-            <Radio style={radioStyle} value='infura'>Infura</Radio>
-          </Radio.Group>
-        )}
-        </Form.Item>
-        <Form.Item label='Websockets Support'>
-          {getFieldDecorator('websockets', { valuePropName: 'websockets' })(
-            <Switch />
-          )}
-        </Form.Item>
-        <Form.Item label='Network ID' hasFeedback>
-          {getFieldDecorator('networkID')(
-            <Select
-              showSearch
-              placeholder='Select a network ID'>
-              <Select.Option value='1'>1 (Mainnet)</Select.Option>
-              <Select.Option value='2'>2 (Ropsten)</Select.Option>
-              <Select.Option value='3'>3 (Rinkeby)</Select.Option>
-              <Select.Option value='4'>4 (?)</Select.Option>
-              <Select.Option value='1000'>1000 (Local Default TestRPC)</Select.Option>
-              <Select.Option value='8888'>8888 (Local Default Geth)</Select.Option>
-            </Select>
-          )}
-        </Form.Item>
-        <Form.Item label='Provider URL'>
-          {getFieldDecorator('url')(
-            <Input placeholder='Provider URL' />
-          )}
-        </Form.Item>
+        <br/>
+        <h5>Provider Type</h5>
+        <RadioGroup
+          name='type'
+          onChange={this.handleChange}
+          selectedValue={this.state.form.type}
+        >
+        <Radio label='Metamask' value='metamask' />
+        <Radio label='Local' value='local' />
+        <Radio label='Remote' value='remote' />
+        <Radio label='Infura' value='infura' />
+        </RadioGroup>
+
+        <br/>
+        <h5>Websockets</h5>
+        <Switch
+          name='websockets'
+          checked={this.state.form.websockets}
+          onChange={this.handleChange}
+          disabled
+        />
+
+        <br/>
+        <h5>Network ID</h5>
+        <NetworkSelect
+          handleChange={this.handleSelectChange}
+          network={this.state.form.network}
+        />
+
+        <br/><br/>
+        <h5>Provider URL</h5>
+        <InputGroup
+          placeholder='Ex: 127.0.0.1:8545'
+          value={this.state.form.url}
+          onChange={this.handleChange}
+          name='url'
+        />
       </div>
     )
   }
 
   render () {
-    const { getFieldDecorator } = this.props.form
-
     return (
-        <Form onSubmit={this.handleSubmit} color='black'>
-          <Form.Item label='Choose Provider'>
-          {getFieldDecorator('provider')(
-            <Radio.Group onChange={this.onProviderChange}>
-              <Radio style={radioStyle} value='metamask'>Default Metamask Provider</Radio>
-              <Radio style={radioStyle} value='local'>Default Local Geth Provider</Radio>
-              <Radio style={radioStyle} value='infura'>Default Infura Provider</Radio>
-              <Radio style={radioStyle} value='infura (rinkeby)'>Default Infura Provider (Rinkeby)</Radio>
-              <Radio style={radioStyle} value='custom'>Custom Provider</Radio>
-            </Radio.Group>
-          )}
-          </Form.Item>
-          {this.state.expand ? this.renderCustomProviderForm() : null}
-          <Button type='primary' htmlType='submit' loading={this.state.loading}>
-              Change Provider
-          </Button>
-        </Form>
+      <div>
+        <form>
+          <RadioGroup
+            name='provider'
+            onChange={this.handleChange}
+            selectedValue={this.state.form.provider}
+          >
+            <Radio label='Default Metamask Provider' value='metamask' />
+            <Radio label='Default Local Node Provider' value='local' />
+            <Radio label='Default Infura Provider' value='infura' />
+            <Radio label='Default Infura Provider (Rinkeby)' value='infura (rinkeby)' />
+            <Radio label='Custom Provider' value='custom' />
+          </RadioGroup>
+        </form>
+        {this.state.form.provider === 'custom' ? this.renderCustomProviderForm() : null}
+        <br/><br/>
+        <Button
+          intent='primary'
+          loading={this.state.loading}
+          onClick={this.handleSubmit}
+        >
+          Change Provider
+        </Button>
+      </div>
     )
   }
 }
 
-ProviderSettings.propTypes = {
+ProviderSettingsForm.propTypes = {
   form: PropTypes.object,
   setCustomProvider: PropTypes.func
 }
-
-const radioStyle = {
-  display: 'block',
-  height: '30px',
-  lineHeight: '30px'
-}
-
-const ProviderSettingsForm = Form.create()(ProviderSettings)
 
 export default ProviderSettingsForm

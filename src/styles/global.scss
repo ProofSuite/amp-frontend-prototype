@@ -1,0 +1,96 @@
+$icons-path: "~ag-grid/src/styles/icons/";
+
+@import "~@blueprintjs/core/src/common/colors";
+@import "~@blueprintjs/core/src/common/color-aliases";
+
+$border-color: $pt-dark-divider-black;
+$cell-horizontal-border: $pt-dark-divider-black;
+$background-color: $dark-gray4;
+$panel-background-color: $dark-gray4;
+//rows
+$selected-color: $dark-gray4;
+$focused-cell-border-color: $dark-gray4;
+$cell-highlight-border: $dark-gray4;
+$cell-vertical-padding: 20px;
+$primary-color: $pt-dark-app-background-color;
+$header-background-color: $dark-gray5;
+$tab-background-color: $dark-gray5;
+$chip-background-color: $dark-gray4;
+$hover-color: $dark-gray5;
+$ag-range-selected-color-1: $dark-gray2;
+$odd-row-background-color: $dark-gray4;
+$range-selection-highlight-color: $dark-gray4;
+$range-selection-background-color: $dark-gray4;
+
+@import "~ag-grid/src/styles/ag-grid.scss";
+@import "~ag-grid/src/styles/ag-theme-dark.scss";
+
+$ag-cell-focus: $dark-gray4;
+
+a {
+  text-decoration: none;
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: none;
+  }
+}
+
+body {
+  background-color: $pt-dark-app-background-color;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// $pt-intent-primary	Primary intent color
+// $pt-intent-success	Success intent color
+// $pt-intent-warning	Warning intent color
+// $pt-intent-danger	Danger intent color
+// $pt-app-background-color	Application background color
+// $pt-dark-app-background-color	Dark theme application background color
+// $pt-text-color	Default text color
+// $pt-text-color-muted	Muted text color
+// $pt-text-color-disabled	Disabled text color
+// $pt-heading-color	Text color for headers
+// $pt-link-color	Text color for links
+// $pt-dark-text-color	Dark theme default text color
+// $pt-dark-text-color-muted	Dark theme muted text color
+// $pt-dark-text-color-disabled	Dark theme disabled text color
+// $pt-dark-heading-color	Dark theme text color for headers
+// $pt-dark-link-color	Dark theme text color for links
+// $pt-text-selection-color	Text selection color
+// $pt-icon-color	Default icon color
+// $pt-icon-color-hover	Hovered icon color
+// $pt-icon-color-disabled	Disabled icon color
+// $pt-icon-color-selected	Selected icon color
+// $pt-dark-icon-color	Dark theme default icon color
+// $pt-dark-icon-color-hover	Dark theme hovered icon color
+// $pt-dark-icon-color-disabled	Dark theme disabled icon color
+// $pt-dark-icon-color-selected	Dark theme selected icon color
+// $pt-divider-black	Black divider color
+// $pt-dark-divider-black	Dark theme black divider color
+// $pt-dark-divider-white	Dark theme white divider color
+// $pt-code-text-color	Code text color
+// $pt-code-background-color	Code background color
+// $pt-dark-code-text-color	Dark theme code text color
+// $pt-dark-code-background-color	Dark theme code background color

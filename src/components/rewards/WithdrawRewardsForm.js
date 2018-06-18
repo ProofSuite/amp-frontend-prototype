@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { Header, Form } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
-import GasSettings from '../common/GasSettings'
-import ErrorNotification from '../common/ErrorNotification'
+import GasSettings from '../common/GasSettings/GasSettings'
+import TxErrorNotification from '../common/TxNotification/TxErrorNotification'
+import { Card, Button } from '@blueprintjs/core'
 
 class WithdrawRewardsForm extends Component {
   state = { gas: '', gasPrice: '' }
@@ -21,19 +21,24 @@ class WithdrawRewardsForm extends Component {
     const { error } = this.props
 
     return (
-      <div>
-        <Header as='h2'>Withdraw Rewards</Header>
-        <Form onSubmit={this.handleSubmit} color='black'>
-            Withdraw your rewards by clicking the button below
-            <GasSettings
-              gas={gas}
-              gasPrice={gasPrice}
-              handleChange={this.handleChange}
-            />
-            { error && <ErrorNotification error={error} /> }
-          <Form.Button content='Send Transaction' inverted color='green' fluid/>
-        </Form>
-      </div>
+      <Card>
+        <h3 as='h2'>Withdraw Rewards</h3>
+          Withdraw your rewards by clicking the button below
+          <GasSettings
+            gas={gas}
+            gasPrice={gasPrice}
+            handleChange={this.handleChange}
+          />
+          { error && <TxErrorNotification error={error} /> }
+          <Button
+            text='Send Transaction'
+            intent='primary'
+            large={true}
+            type='submit'
+            fill
+            onClick={this.handleSubmit}
+          />
+        </Card>
     )
   }
 }

@@ -1,7 +1,7 @@
 import CryptoFiatHub from '../../../build/contracts/CryptoFiatHub.json'
 import CryptoDollar from '../../../build/contracts/CryptoDollar.json'
-import { getContractInstance } from '../../helpers/contractHelpers'
-import { formatEtherColumn } from '../../helpers/formatHelpers'
+import { getContractInstance } from '../../helpers/contracts'
+import { formatEtherColumn } from '../../helpers/format'
 import { getProviderUtils } from '../../helpers/web3'
 
 export const QUERYING_CRYPTODOLLAR_STATE = 'QUERYING_CRYPTODOLLAR_STATE'
@@ -26,17 +26,19 @@ export const queryCryptoDollarContractState = () => {
       dispatch(queryingCryptoDollarState())
 
       let provider = getProviderUtils(getState)
-      if (typeof provider.web3 === 'undefined') return dispatch(queryCryptoDollarStateError('could not instantiate web3'))
+      if (typeof provider.web3 === 'undefined') {
+        return dispatch(queryCryptoDollarStateError('could not instantiate web3'))
+      }
 
       let cryptoDollar = getContractInstance(CryptoDollar, provider)
       let cryptoFiatHub = getContractInstance(CryptoFiatHub, provider)
       let exchangeRate = 87537
 
       let contractData = await Promise.all([
-        cryptoDollar.methods.totalSupply().call(),
-        cryptoFiatHub.methods.totalOutstanding(exchangeRate).call(),
-        cryptoFiatHub.methods.buffer(exchangeRate).call(),
-        cryptoFiatHub.methods.contractBalance().call()
+        cryptoDollar.totalSupply(),
+        cryptoFiatHub.totalOutstanding(exchangeRate),
+        cryptoFiatHub.buffer(exchangeRate),
+        cryptoFiatHub.contractBalance()
       ])
 
       let [totalSupply, totalOutstanding, buffer, contractBalance] = formatEtherColumn(contractData)

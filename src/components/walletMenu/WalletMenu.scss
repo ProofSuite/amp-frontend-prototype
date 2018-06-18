@@ -1,0 +1,48 @@
+@import '../../styles/styles.scss';
+
+.actionsPanel {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: stretch;
+  align-content: center;
+  height: 500px;
+}
+
+.depositsPanel {
+  height: 500px;
+}
+
+.depositsTable {
+  height: 300px;
+  width: 100%;
+  box-shadow: $pt-dark-dialog-box-shadow;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  align-items: center;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: space-between;
+  width: 150px;
+  height: 150px;
+  text-align: center;
+}
+
+.cardGroup {
+  display: flex;
+  padding-left: 50px;
+  padding-right: 50px;
+  justify-content: space-around;
+  align-content: center;
+  align-items: center;
+  flex-grow: 2;
+}

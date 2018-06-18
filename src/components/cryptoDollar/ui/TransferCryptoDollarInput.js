@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { Header, Form } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
-import GasSettings from '../../common/GasSettings'
+import GasSettings from '../../common/GasSettings/GasSettings'
 import TxNotification from '../../common/TxNotification'
+import { Card, InputGroup, Button } from '@blueprintjs/core'
 
 class TransferCryptoDollarInput extends Component {
 
@@ -22,22 +22,21 @@ class TransferCryptoDollarInput extends Component {
     const { error, receipt, txHash, loading } = this.props.status
 
     return (
-      <div>
-        <Header as='h2'>Transfer CryptoDollar</Header>
-        <Form onSubmit={this.handleSubmit}>
-            <Form.Input
+      <Card>
+        <h3>Transfer CryptoDollar</h3>
+            <InputGroup
               placeholder='Message amount'
               name='amount'
               value={amount}
               onChange={this.handleChange}
             />
-            <Form.Input
+            <InputGroup
               placeholder='Sender'
               name='sender'
               value={sender}
               onChange={this.handleChange}
             />
-            <Form.Input
+            <InputGroup
               placeholder='Receiver'
               name='receiver'
               value={receiver}
@@ -54,9 +53,15 @@ class TransferCryptoDollarInput extends Component {
               txHash={txHash}
               receipt={receipt}
             />
-          <Form.Button content='Send Transaction' inverted color='green' fluid/>
-        </Form>
-      </div>
+            <Button
+              text='Send Transaction'
+              intent='primary'
+              large={true}
+              type='submit'
+              fill
+              onClick={this.handleSubmit}
+            />
+        </Card>
     )
   }
 }

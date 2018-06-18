@@ -1,5 +1,5 @@
 import { CryptoFiatHub, CryptoDollar, Rewards } from 'proof-contracts-interfaces'
-import { getContractInstance } from './contractHelpers'
+import { getContractInstance } from './contracts'
 
 /**
  * @description Creates a raw buyCryptoDollar transaction
@@ -56,7 +56,7 @@ export const withdrawRewardsRawTx = async (provider) => {
   return rawTx
 }
 
-export const txSigner = async (provider, sender, privateKey, txParams) => {
+export const signTx = async (provider, sender, privateKey, txParams) => {
   let { to, gas, gasPrice, value, data } = txParams
   let tx = {
     chainId: provider.networkID,
@@ -77,7 +77,7 @@ export const buyCryptoDollarSignedTx = async (provider, sender, privateKey, txPa
   txParams.to = cryptoFiatHub.addres
   txParams.data = cryptoFiatHub.methods.buyCryptoDollar().encodeABI()
 
-  let signedTx = await txSigner(provider, sender, privateKey, txParams)
+  let signedTx = await signTx(provider, sender, privateKey, txParams)
   return signedTx
 }
 
@@ -86,7 +86,7 @@ export const sellCryptoDollarSignedTx = async (provider, sender, tokens, private
   txParams.to = cryptoFiatHub.address
   txParams.data = cryptoFiatHub.methods.sellCryptoDollar(tokens).encodeABI()
 
-  let signedTx = await txSigner(provider, sender, privateKey, txParams)
+  let signedTx = await signTx(provider, sender, privateKey, txParams)
   return signedTx
 }
 
@@ -95,7 +95,7 @@ export const sellUnpeggedCryptoDollarSignedTx = async (provider, sender, tokens,
   txParams.to = cryptoFiatHub.address
   txParams.data = cryptoFiatHub.methods.sellUnpeggedCryptoDollar(tokens).encodeABI()
 
-  let signedTx = await txSigner(provider, sender, privateKey, txParams)
+  let signedTx = await signTx(provider, sender, privateKey, txParams)
   return signedTx
 }
 
@@ -104,7 +104,7 @@ export const transferCryptoDollarSignedTx = async (provider, sender, receiver, a
   txParams.to = cryptoFiatHub.address
   txParams.data = cryptoFiatHub.methods.transferCryptoDollar(receiver, amount).encodeABI()
 
-  let signedTx = await txSigner(provider, sender, receiver, amount, privateKey, txParams)
+  let signedTx = await signTx(provider, sender, receiver, amount, privateKey, txParams)
   return signedTx
 }
 
@@ -113,6 +113,6 @@ export const withdrawRewardsSignedTx = async (provider, sender, privateKey, txPa
   txParams.to = rewards.address
   txParams.data = rewards.methods.withdrawRewards().encodeABI()
 
-  let signedTx = await txSigner(provider, sender, privateKey, txParams)
+  let signedTx = await signTx(provider, sender, privateKey, txParams)
   return signedTx
 }

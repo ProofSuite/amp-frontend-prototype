@@ -1,6 +1,6 @@
 import React from 'react'
 import BalanceRow from './BalanceRow'
-import { Table, Loader } from 'semantic-ui-react'
+import { Loader } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
 
 const AccountBalancesTable = (props) => {
@@ -10,19 +10,19 @@ const AccountBalancesTable = (props) => {
   ))
 
   return (
-    <Table celled selectable striped>
-      <Table.Header>
-        <Table.Row active>
-          <Table.HeaderCell>Address</Table.HeaderCell>
-          <Table.HeaderCell>Ethereum Balance</Table.HeaderCell>
-          <Table.HeaderCell>Cryptodollar Balance</Table.HeaderCell>
-          <Table.HeaderCell>Reserved Ether Balance</Table.HeaderCell>
-        </Table.Row>
-      </Table.Header>
-      <Table.Body>
+    <table className='pt-html-table pt-interactive' >
+      <thead>
+        <tr active>
+          <th>Address</th>
+          <th>Ethereum Balance</th>
+          <th>Cryptodollar Balance</th>
+          <th>Reserved Ether Balance</th>
+        </tr>
+      </thead>
+      <tbody>
       { balances ? balancesList : <Loader>Loading</Loader>}
-      </Table.Body>
-    </Table>
+      </tbody>
+    </table>
   )
 }
 

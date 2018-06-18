@@ -1,6 +1,10 @@
 const ethers = require('ethers')
 const Wallet = ethers.Wallet
 
+export const getDefaultWalletAddress = (getState) => {
+  return getState().data.wallets.defaultWallet
+}
+
 /**
  * @description Generates a brain wallet from a username/password pair
  * @param username [String]
@@ -62,5 +66,19 @@ export const createAndEncryptWallet = async (password, callback) => {
  */
 export const decryptWallet = async (jsonWallet, password) => {
   let wallet = await Wallet.fromEncryptedWallet(jsonWallet, password)
+  return wallet
+}
+
+export const saveWalletInSessionStorage = (wallet) => {
+  let address = wallet.address
+  let privateKey = wallet.privateKey
+
+  sessionStorage.setItem(address, privateKey)
+}
+
+export const getWalletFromSessionStorage = (address) => {
+  let privateKey = sessionStorage.getItem(address)
+
+  let wallet = new Wallet(privateKey)
   return wallet
 }

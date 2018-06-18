@@ -24,13 +24,19 @@ class TxCreator extends PureComponent {
     switch (provider.type) {
       case 'metamask':
         return (
-          <MetamaskTxCreator validateTx={validateTx} sendTx={sendTx}>
+          <MetamaskTxCreator
+            validateTx={validateTx}
+            sendTx={sendTx}
+          >
             {this.props.children}
           </MetamaskTxCreator>
         )
       case 'local':
         return (
-          <LocalTxCreator validateTx={validateTx} sendTx={sendTx}>
+          <LocalTxCreator
+            validateTx={validateTx}
+            sendTx={sendTx}
+          >
             {this.props.children}
           </LocalTxCreator>
         )

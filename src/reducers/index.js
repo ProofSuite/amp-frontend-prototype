@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 import uiReducer from './ui'
 import dataReducer from './data'
+import txReducer from './tx'
 
 /**
  * Reducers
@@ -8,6 +9,7 @@ import dataReducer from './data'
  * Reducers are split between ui reducers and data reducers
  * UI reducers correspond to a 1-1 component mapping
  * Data reducers are mapped 1-to-N (data can be served to different components)
+ * Tx reducers correspond to an ethereum transaction (data can be served to different components)
  *
  * Actions
  *
@@ -19,7 +21,8 @@ import dataReducer from './data'
  */
 const reducer = combineReducers({
   ui: uiReducer,
-  data: dataReducer
+  data: dataReducer,
+  tx: txReducer
 })
 
 export default reducer
