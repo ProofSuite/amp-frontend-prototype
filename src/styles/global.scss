@@ -40,6 +40,10 @@ body {
   background-color: $pt-dark-app-background-color;
 }
 
+*:focus {
+  outline: none !important;
+}
+
 
 
 

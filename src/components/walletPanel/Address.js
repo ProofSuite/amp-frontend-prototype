@@ -1,14 +1,19 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import styles from './WalletPanel.scss'
 
-const Address = () => {
+const Address = ({ address }) => {
   return (
     <div className={styles.address}>
       <h3>Address</h3>
-      <p>0xe8e84ee367bc63ddb38d3d01bccef106c194dc47</p>
+      <p>{address}</p>
     </div>
   )
+}
+
+Address.propTypes = {
+  address: PropTypes.string
 }
 
 export default Address

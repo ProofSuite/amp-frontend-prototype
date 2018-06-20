@@ -25,8 +25,7 @@ class SendEtherForm extends Component {
   }
 
   handleChange = (e) => {
-    const value = e.target.value
-    const name = e.target.name
+    const { value, name } = e.target
 
     if (this.state.token.address === '0x0') {
       this.setState({ [name]: value }, () => {

@@ -5,7 +5,7 @@ import {
 } from '../walletActions'
 
 import { sellUnpeggedCryptoDollarRawTx, sellUnpeggedCryptoDollarSignedTx } from '../../helpers/tx'
-import { decryptWallet } from '../../helpers/wallet'
+import { decryptWallet } from '../../helpers/wallets'
 import { validateTransaction } from '../../helpers/txValidator'
 
 export const SELL_UNPEGGED_CRYPTODOLLAR_TX_STARTED = 'SELL_UNPEGGED_CRYPTODOLLAR_TX_STARTED'

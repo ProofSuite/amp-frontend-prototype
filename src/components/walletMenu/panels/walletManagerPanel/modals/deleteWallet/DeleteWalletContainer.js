@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import DeleteWalletCard from './DeleteWalletCard'
+import DeleteWalletModal from './DeleteWalletModal'
 
-class DeleteWalletModal extends Component {
+class DeleteWalletContainer extends Component {
 
   state = {
     currentStep: 1
@@ -19,8 +19,8 @@ class DeleteWalletModal extends Component {
 
   render () {
     const mergedProps = { ...this.props, ...this.state, next: this.next }
-    return (<DeleteWalletCard {...mergedProps} />)
+    return (<DeleteWalletModal {...mergedProps} />)
   }
 }
 
-export default DeleteWalletModal
+export default DeleteWalletContainer

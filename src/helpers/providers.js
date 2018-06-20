@@ -38,7 +38,7 @@ export const getNetwork = getState => {
     provider = getMetamaskProvider({ networkName })
   }
 
-  return { networkID, provider }
+  return { networkID, type, url, provider }
 }
 
 export const getInfuraProvider = ({ networkName }) => {

@@ -2,7 +2,7 @@ import { walletAuthenticating, walletAuthenticated, walletAuthenticationError } 
 
 import { sellCryptoDollarRawTx, sellCryptoDollarSignedTx } from '../../helpers/tx'
 import { validateTransaction } from '../../helpers/txValidator'
-import { decryptWallet } from '../../helpers/wallet'
+import { decryptWallet } from '../../helpers/wallets'
 
 export const SELL_CRYPTODOLLAR_TX_STARTED = 'SELL_CRYPTODOLLAR_TX_STARTED'
 export const SELL_CRYPTODOLLAR_TX_ERROR = 'SELL_CRYPTODOLLAR_TX_ERROR'

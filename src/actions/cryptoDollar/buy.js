@@ -2,7 +2,7 @@ import { walletAuthenticating, walletAuthenticated, walletAuthenticationError } 
 
 import { buyCryptoDollarRawTx, buyCryptoDollarSignedTx } from '../../helpers/tx'
 import { validateTransaction } from '../../helpers/txValidator'
-import { decryptWallet } from '../../helpers/wallet'
+import { decryptWallet } from '../../helpers/wallets'
 
 export const BUY_CRYPTODOLLAR_TX_STARTED = 'BUY_CRYPTODOLLAR_TX_STARTED'
 export const BUY_CRYPTODOLLAR_TX_ERROR = 'BUY_CRYPTODOLLAR_TX_ERROR'

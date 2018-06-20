@@ -4,7 +4,7 @@ import {
   walletAuthenticationError
 } from '../walletActions'
 
-import { decryptWallet } from '../../helpers/wallet'
+import { decryptWallet } from '../../helpers/wallets'
 import { transferCryptoDollarRawTx, transferCryptoDollarSignedTx } from '../../helpers/tx'
 import { validateTransaction } from '../../helpers/txValidator'
 

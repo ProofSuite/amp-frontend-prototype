@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import WalletPanel from '../components/walletPanel/WalletPanel'
+import WalletPanelContainer from '../components/walletPanel/WalletPanelContainer'
 import WalletMenu from '../components/walletMenu/WalletMenu'
 
 import styles from './WalletLayout.scss'
@@ -9,7 +9,7 @@ class WalletLayout extends Component {
   render () {
     return (
       <div className={styles.content}>
-        <WalletPanel />
+        <WalletPanelContainer />
         <WalletMenu />
       </div>
     )

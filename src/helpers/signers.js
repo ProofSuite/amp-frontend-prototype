@@ -1,6 +1,6 @@
 import { Wallet } from 'ethers'
 import { getProvider, getProviderType } from './providers'
-import { getDefaultWalletAddress, getWalletFromSessionStorage } from './wallet'
+import { getDefaultWalletAddress, getWalletFromSessionStorage } from './wallets'
 
 export const PrivateKeySigner = (privateKey, provider) => {
   this.wallet = new Wallet(privateKey)

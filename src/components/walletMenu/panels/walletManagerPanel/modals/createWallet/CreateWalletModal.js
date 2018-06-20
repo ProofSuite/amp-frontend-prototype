@@ -1,32 +1,34 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Steps } from 'antd'
 import { Dialog, Intent, Button } from '@blueprintjs/core'
-import InputPassword from './InputPassword'
-import DownloadWallet from './DownloadWallet'
-import WalletInformation from './WalletInformation'
-import EncryptionProgressBar from './EncryptionProgressBar'
+import WalletPasswordStep from './WalletPasswordStep'
+import DownloadWalletStep from './DownloadWalletStep'
+import WalletInformationStep from './WalletInformationStep'
+import Steps from 'rc-steps'
 
-class CreateWalletCard extends Component {
-  renderInputPassword () {
-    const { updatePassword, showEncryptionProgress, encryptionPercentage } = this.props
+class CreateWalletModal extends Component {
+
+  renderWalletPasswordStep () {
+    const { password, updatePassword, showEncryptionProgress, encryptionPercentage } = this.props
     return (
-      <div>
-        <InputPassword updatePassword={updatePassword} />
-        {showEncryptionProgress && <EncryptionProgressBar percent={encryptionPercentage} />}
-      </div>
+      <WalletPasswordStep
+        password={password}
+        updatePassword={updatePassword}
+        showEncryptionProgress={showEncryptionProgress}
+        encryptionPercentage={encryptionPercentage}
+       />
     )
   }
 
-  renderDownloadWallet () {
+  renderWalletDownloadStep () {
     return (
-      <DownloadWallet />
+      <DownloadWalletStep />
     )
   }
 
-  renderWalletInformation () {
+  renderWalletInformationStep () {
     return (
-      <WalletInformation />
+      <WalletInformationStep />
     )
   }
 
@@ -68,9 +70,9 @@ class CreateWalletCard extends Component {
           <Steps.Step title='Download Wallet' />
           <Steps.Step title='Wallet Information' />
         </Steps>
-        { this.props.currentStep === 0 && this.renderInputPassword()}
-        { this.props.currentStep === 1 && this.renderDownloadWallet()}
-        { this.props.currentStep === 2 && this.renderWalletInformation()}
+        { this.props.currentStep === 0 && this.renderWalletPasswordStep()}
+        { this.props.currentStep === 1 && this.renderWalletDownloadStep()}
+        { this.props.currentStep === 2 && this.renderWalletInformationStep()}
       </div>
       <div className='pt-dialog-footer'>
         <div className='pt-dialog-footer-actions'>
@@ -90,7 +92,7 @@ class CreateWalletCard extends Component {
   }
 }
 
-CreateWalletCard.propTypes = {
+CreateWalletModal.propTypes = {
   visible: PropTypes.bool,
   hideModal: PropTypes.func,
   currentStep: PropTypes.number,
@@ -100,9 +102,10 @@ CreateWalletCard.propTypes = {
   goBackToDownloadWallet: PropTypes.func,
   complete: PropTypes.func,
   cancel: PropTypes.func,
+  password: PropTypes.func,
   updatePassword: PropTypes.func,
   encryptionPercentage: PropTypes.number,
   showEncryptionProgress: PropTypes.bool
 }
 
-export default CreateWalletCard
+export default CreateWalletModal
