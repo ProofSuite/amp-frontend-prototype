@@ -48,3 +48,9 @@
   align-items: center;
   flex-grow: 2;
 }
+
+@media only screen and (max-width: 800px) {
+  .cardGroup {
+    flex-direction: column;
+  }
+}

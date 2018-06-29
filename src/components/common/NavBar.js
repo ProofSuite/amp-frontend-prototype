@@ -10,6 +10,8 @@ import {
   InputGroup
 } from '@blueprintjs/core'
 
+import styles from './NavBar.scss'
+
 class NavBar extends Component {
   state = { active: 'wallet' }
 
@@ -23,6 +25,7 @@ class NavBar extends Component {
         <NavbarGroup align={Alignment.LEFT}>
           <NavbarHeading>AMP</NavbarHeading>
           <NavbarDivider />
+          <div className={styles.navLayout}>
           <Link to='/' className='pt-no-style'>
             <Button
               minimal
@@ -69,8 +72,9 @@ class NavBar extends Component {
               onClick={this.handleClick}
             />
           </Link>
+          </div>
         </NavbarGroup>
-        <NavbarGroup align={Alignment.RIGHT}>
+        <NavbarGroup align={Alignment.RIGHT} className={styles.search} >
           <InputGroup placeholder='Search...' type='search' />
         </NavbarGroup>
       </Navbar>

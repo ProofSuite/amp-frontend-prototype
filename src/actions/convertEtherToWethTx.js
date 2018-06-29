@@ -90,8 +90,6 @@ export const sendConvertEtherToWethTx = ({ value, receiver, gas, gasPrice }) => 
   }
 }
 
-
-
 export const SEND_ETHER_TX_STARTED = 'SEND_ETHER_TX_STARTED'
 export const SEND_ETHER_TX_ERROR = 'SEND_ETHER_TX_ERROR'
 export const SEND_ETHER_TX_SIGNING = 'SEND_ETHER_TX_SIGNING'

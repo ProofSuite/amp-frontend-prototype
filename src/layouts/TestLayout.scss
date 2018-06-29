@@ -17,3 +17,13 @@
 .buyTxContainer {
   grid-area: buyTxContainer;
 }
+
+
+@media only screen and (max-width: 800px) {
+  .content {
+    grid-template-columns: 1fr;
+    grid-template-rows: 100%;
+    grid-template-areas:
+    "buyTxContainer"
+  }
+}
