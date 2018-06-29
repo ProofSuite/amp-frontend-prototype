@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { createAndEncryptWallet } from '../../../../helpers/wallet'
-import { createWallet } from '../../../../actions/walletActions'
-import CreateWalletCard from './CreateWalletCard'
+import { createAndEncryptWallet } from 'helpers/wallets'
+import { createWallet } from 'actions/walletActions'
+import CreateWalletModal from './CreateWalletModal'
 import PropTypes from 'prop-types'
 
-class CreateWalletModal extends Component {
+class CreateWalletContainer extends Component {
   state = {
     currentStep: 0,
     password: '',
@@ -31,16 +31,16 @@ class CreateWalletModal extends Component {
 
   updateProgressBar = percent => {
     if (percent === 1) {
-      this.setState({ encryptionPercentage: 100 })
+      this.setState({ encryptionPercentage: 1 })
       setTimeout(() => {
         this.setState({ currentStep: 1 })
       }, 1500)
     } else if (percent > 0.75) {
-      this.setState({ encryptionPercentage: 75 })
+      this.setState({ encryptionPercentage: 0.75 })
     } else if (percent > 0.50) {
-      this.setState({ encryptionPercentage: 50 })
+      this.setState({ encryptionPercentage: 0.50 })
     } else if (percent > 0.25) {
-      this.setState({ encryptionPercentage: 25 })
+      this.setState({ encryptionPercentage: 0.25 })
     }
   }
 
@@ -56,12 +56,12 @@ class CreateWalletModal extends Component {
     this.setState({ currentStep: 0 })
   }
 
-  goToComplete = () => {
-    this.setState({ currentStep: 2 })
-  }
-
   goBackToDownloadWallet = () => {
     this.setState({ currentStep: 1 })
+  }
+
+  goToComplete = () => {
+    this.setState({ currentStep: 2 })
   }
 
   complete = () => {
@@ -85,7 +85,7 @@ class CreateWalletModal extends Component {
       complete: this.complete,
       cancel: this.cancel
     }
-    return <CreateWalletCard {...mergedProps} />
+    return <CreateWalletModal {...mergedProps} />
   }
 }
 
@@ -93,9 +93,9 @@ const mapDispatchToProps = {
   createWallet
 }
 
-CreateWalletModal.propTypes = {
+CreateWalletContainer.propTypes = {
   hideModal: PropTypes.func,
   createWallet: PropTypes.func
 }
 
-export default connect(null, mapDispatchToProps)(CreateWalletModal)
+export default connect(null, mapDispatchToProps)(CreateWalletContainer)

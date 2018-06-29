@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Card } from '@blueprintjs/core'
 import Address from './Address'
 import EtherBalance from './EtherBalance'
@@ -8,21 +9,30 @@ import styles from '../../layouts/WalletLayout.scss'
 
 class WalletPanel extends Component {
 
-  state = {
-    showPrivateKey: false
+  componentDidMount () {
+    this.props.queryDefaultAccount()
   }
 
   render () {
+    let { defaultAccountBalance, defaultAccountAddress } = this.props
+    console.log(defaultAccountBalance, defaultAccountAddress)
+
     return (
       <div className={styles.walletPanel}>
         <Card className={styles.walletPanelCard} >
-          <EtherBalance />
-          <Address />
+          <EtherBalance balance={defaultAccountBalance} />
+          <Address address={defaultAccountAddress} />
           <PrivateKey />
         </Card>
       </div>
     )
   }
+}
+
+WalletPanel.propTypes = {
+  defaultAccountAddress: PropTypes.string,
+  defaultAccountBalance: PropTypes.string,
+  queryDefaultAccount: PropTypes.func
 }
 
 export default WalletPanel

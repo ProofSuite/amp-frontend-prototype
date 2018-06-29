@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Dropzone from 'react-dropzone'
-import { Modal, Icon } from 'antd'
+import { Dialog, Icon, Intent } from '@blueprintjs/core'
 
 import styled from 'styled-components'
 
@@ -9,22 +9,22 @@ class ImportWalletCard extends Component {
 
   render () {
     return (
-      <Modal
+      <Dialog
         title='Import Wallet Modal'
-        visible = {this.props.visible}
-        onOk = {this.props.onSubmit}
-        onCancel = {this.props.hideModal}
+        isOpen = {this.props.visible}
+        onClose = {this.props.hideModal}
+        className='pt-dark'
       >
         <DropzoneContainer>
           <Dropzone onDrop={this.props.onDrop.bind(this)}>
             <DropzoneMessageContainer>
-              <Icon type='inbox' style={{ fontSize: 120, color: '#1890ff' }} />
+              <Icon icon='inbox' iconSize={120} intent={Intent.PRIMARY} />
             </DropzoneMessageContainer>
           </Dropzone>
             <ul>{this.props.walletList}</ul>
             <p>Click or Drag files to upload your wallets</p>
         </DropzoneContainer>
-      </Modal>
+      </Dialog>
     )
   }
 }

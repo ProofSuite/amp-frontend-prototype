@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import styled from 'styled-components'
 
-export default class WalletInformation extends Component {
+export default class WalletInformationStep extends Component {
   render () {
     return (
       <WalletInformationCard>

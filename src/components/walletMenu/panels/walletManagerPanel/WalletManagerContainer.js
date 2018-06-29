@@ -1,11 +1,12 @@
+import { connect } from 'react-redux'
+import WalletManager from './WalletManager'
 import React, { Component } from 'react'
-import WalletManagerCard from './WalletManagerCard'
-import CreateWalletModal from './modals/createWallet/CreateWalletModal'
-import ImportWalletModal from './modals/importWallet/ImportWalletModal'
-import DeleteWalletModal from './modals/deleteWallet/DeleteWalletModal'
-import styles from '../../layouts/SettingsLayout.scss'
+import CreateWalletContainer from './modals/createWallet/CreateWalletContainer'
+import ImportWalletContainer from './modals/importWallet/ImportWalletContainer'
+import DeleteWalletContainer from './modals/deleteWallet/DeleteWalletContainer'
+import styles from 'layouts/SettingsLayout.scss'
 
-class WalletManager extends Component {
+class WalletManagerContainer extends Component {
 
   state = {
     createModalVisible: false,
@@ -46,16 +47,16 @@ class WalletManager extends Component {
 
     return (
       <div className={styles.walletManager}>
-        <WalletManagerCard {...showModals} />
-        <CreateWalletModal
+        <WalletManager {...showModals} />
+        <CreateWalletContainer
           visible = {this.state.createModalVisible}
           hideModal = {this.hideCreateModal}
           />
-        <ImportWalletModal
+        <ImportWalletContainer
           visible = {this.state.importModalVisible}
           hideModal = {this.hideImportModal}
         />
-        <DeleteWalletModal
+        <DeleteWalletContainer
           visible = {this.state.deleteModalVisible}
           hideModal = {this.hideDeleteModal}
         />
@@ -65,4 +66,10 @@ class WalletManager extends Component {
 
 }
 
-export default WalletManager
+const mapStateToProps = state => ({
+})
+
+const mapDispatchToProps = {
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(WalletManagerContainer)

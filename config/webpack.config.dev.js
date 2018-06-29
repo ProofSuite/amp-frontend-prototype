@@ -47,7 +47,12 @@ module.exports = {
       process.env.NODE_PATH.split(path.delimiter).filter(Boolean)
     ),
     extensions: ['.web.js', '.mjs', '.js', '.json', '.web.jsx', '.jsx'],
-    alias: { 'react-native': 'react-native-web' }
+    alias: {
+      'components': path.resolve('src/components'),
+      'actions': path.resolve('src/actions'),
+      'helpers': path.resolve('src/helpers'),
+      'layouts': path.resolve('src/layouts'),
+      'react-native': 'react-native-web' }
   },
   module: {
     strictExportPresence: true,

@@ -28,7 +28,6 @@ export const walletAuthenticationError = error => ({
   type: WALLET_AUTHENTICATION_ERROR,
   payload: { error }
 })
-
 export const unAuthenticateWallet = () => (dispatch) => {
   dispatch({ type: WALLET_UNAUTHENTICATE })
 }
@@ -56,3 +55,4 @@ export const removeWallets = (addresses) => (dispatch) => {
     dispatch(walletsError(error.message))
   }
 }
+

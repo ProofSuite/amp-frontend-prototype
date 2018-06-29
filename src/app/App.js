@@ -10,10 +10,14 @@ import PropTypes from 'prop-types'
 import { hot } from 'react-hot-loader'
 import { Route, Switch, BrowserRouter } from 'react-router-dom'
 
-import '@blueprintjs/core/lib/css/blueprint.css?global'
-import '@blueprintjs/table/lib/css/table.css?global'
 import '../styles/global.scss?global'
 import '../styles/styles.scss?global'
+import '@blueprintjs/core/lib/css/blueprint.css?global'
+import '@blueprintjs/table/lib/css/table.css?global'
+
+// Global imports for the stepper component (until we find a better method)
+import 'rc-steps/assets/index.css?global'
+import 'rc-steps/assets/iconfont.css?global'
 
 import NavBar from '../components/common/NavBar'
 

@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import ImportWalletCard from './ImportWalletCard'
+import ImportWalletModal from './ImportWalletModal'
 
-import { importWallet } from '../../../../actions/walletActions'
+import { importWallet } from '../../../../../../actions/walletActions'
 
-class ImportWalletModal extends Component {
+class ImportWalletContainer extends Component {
 
   state = { wallets: [], showModal: false }
 
@@ -22,14 +22,13 @@ class ImportWalletModal extends Component {
 
   onSubmit = () => {
     this.props.importWallet(this.state.wallets)
-    console.log(this.state.wallets)
     this.setState({ wallets: [] })
   }
 
   render () {
     const walletList = this.state.wallets.map(f => <li key={f.address}>{f.address}</li>)
     const mergedProps = { ...this.props, walletList, onDrop: this.onDrop, onSubmit: this.onSubmit }
-    return <ImportWalletCard {...mergedProps} />
+    return <ImportWalletModal {...mergedProps} />
   }
 }
 
@@ -37,8 +36,8 @@ const mapDispatchToProps = {
   importWallet
 }
 
-ImportWalletModal.propTypes = {
+ImportWalletContainer.propTypes = {
   importWallet: PropTypes.func
 }
 
-export default connect(null, mapDispatchToProps)(ImportWalletModal)
+export default connect(null, mapDispatchToProps)(ImportWalletContainer)

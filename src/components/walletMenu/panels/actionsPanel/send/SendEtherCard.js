@@ -10,7 +10,6 @@ class SendEtherCard extends Component {
     return (
       <div className={styles.card}>
       <Card
-        elevation={Elevation.TWO}
         interactive={true}
         onClick={this.props.onClick}
       >

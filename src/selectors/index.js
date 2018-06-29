@@ -28,6 +28,19 @@ export const getAccountsStatus = (state) => {
 export const getAccountsAddresses = (state) => {
   return accountSelectors.getAccountsAddresses(state.data.accounts)
 }
+
+export const getDefaultAccount = (state) => {
+  return accountSelectors.getDefaultAccount(state.data.accounts)
+}
+
+export const getDefaultAccountAddress = (state) => {
+  return accountSelectors.getDefaultAccountAddress(state.data.accounts)
+}
+
+export const getDefaultAccountFormattedBalance = (state) => {
+  return accountSelectors.getDefaultAccountFormattedBalance(state.data.accounts)
+}
+
 /**
  * Balances Selectors
  */

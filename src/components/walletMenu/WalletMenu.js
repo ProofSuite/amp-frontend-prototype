@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { Card, Tab, Tabs } from '@blueprintjs/core'
-import ActionsPanel from './panels/actionsPanel/ActionsPanel.js'
-import DepositPanel from './panels/depositPanel/DepositPanel.js'
+import ActionsPanel from './panels/actionsPanel/ActionsPanel'
+import DepositPanel from './panels/depositPanel/DepositPanel'
+import WalletManagerContainer from './panels/walletManagerPanel/WalletManagerContainer'
 
 import styles from '../../layouts/WalletLayout.scss'
 
@@ -15,21 +16,21 @@ class WalletMenu extends Component {
     this.setState({ tab: value })
   }
 
-  renderDepositTab = () => {
-    return (
-      <DepositPanel />
-    )
-  }
-
   renderActionsTab = () => {
     return (
       <ActionsPanel />
     )
   }
 
+  renderDepositTab = () => {
+    return (
+      <DepositPanel />
+    )
+  }
+
   renderWalletManagerTab = () => {
     return (
-      <div>Wallet Manager Menu</div>
+      <WalletManagerContainer />
     )
   }
 

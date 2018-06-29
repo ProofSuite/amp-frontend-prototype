@@ -6,7 +6,9 @@ import {
   UPDATE_ACCOUNTS,
   ADD_ACCOUNT,
   ADD_ACCOUNTS,
-  DELETE_ACCOUNT
+  DELETE_ACCOUNT,
+  UPDATE_DEFAULT_ACCOUNT,
+  UPDATE_DEFAULT_ACCOUNT_BALANCE
 } from '../../actions/accountActions'
 
 const initialStatus = {
@@ -58,9 +60,28 @@ const addresses = (state = [], action) => {
   }
 }
 
+const defaultAccount = (state = '', action) => {
+  let { type, payload } = action
+  switch (type) {
+    case UPDATE_DEFAULT_ACCOUNT:
+      return {
+        address: payload.address,
+        balance: ''
+      }
+    case UPDATE_DEFAULT_ACCOUNT_BALANCE:
+      return {
+        ...state,
+        balance: payload.balance
+      }
+    default:
+      return state
+  }
+}
+
 const accounts = combineReducers({
   status,
-  addresses
+  addresses,
+  defaultAccount
 })
 
 export default accounts

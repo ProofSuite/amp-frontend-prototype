@@ -1,5 +1,5 @@
 import { formatEtherColumn } from '../helpers/format'
-import { getProviderInfo, getProvider } from '../helpers/providers'
+import { getProvider } from '../helpers/providers'
 
 export const ETHER_BALANCES_LOADING = 'ETHER_BALANCES_LOADING'
 export const ETHER_BALANCES_ERROR = 'ETHER_BALANCES_ERROR'
@@ -7,33 +7,24 @@ export const UPDATE_ETHER_BALANCE = 'UPDATE_ETHER_BALANCE'
 export const UPDATE_ETHER_BALANCES = 'UPDATE_ETHER_BALANCES'
 export const DELETE_ETHER_BALANCE = 'DELETE_ETHER_BALANCE'
 
-export const etherBalancesLoading = () => dispatch =>
-  dispatch({ type: ETHER_BALANCES_LOADING })
+export const etherBalancesLoading = () => ({ type: ETHER_BALANCES_LOADING })
 
-export const etherBalancesError = () => dispatch =>
-  dispatch({ type: ETHER_BALANCES_ERROR })
+export const etherBalancesError = () => ({ type: ETHER_BALANCES_ERROR })
 
-export const updateEtherBalance = (address, etherBalance) => dispatch =>
-  dispatch({ type: UPDATE_ETHER_BALANCE, payload: { address, etherBalance } })
+export const updateEtherBalance = (address, etherBalance) =>
+({ type: UPDATE_ETHER_BALANCE, payload: { address, etherBalance } })
 
-export const deleteEtherBalance = address => dispatch =>
-  dispatch({ type: DELETE_ETHER_BALANCE, payload: { address } })
+export const deleteEtherBalance = address => ({ type: DELETE_ETHER_BALANCE, payload: { address } })
 
-export const updateEtherBalances = etherBalances => dispatch =>
-  dispatch({ type: UPDATE_ETHER_BALANCES, payload: { etherBalances } })
+export const updateEtherBalances = etherBalances => ({ type: UPDATE_ETHER_BALANCES, payload: { etherBalances } })
 
 export const queryEtherBalances = cryptoDollarBalances => async (dispatch, getState) => {
   try {
-    etherBalancesLoading()
-
-    let { networkID } = getProviderInfo(getState)
-    if (typeof networkID === 'undefined') {
-      return etherBalancesError()
-    }
+    dispatch(etherBalancesLoading())
 
     let provider = getProvider(getState)
     if (typeof provider === 'undefined') {
-      return etherBalancesError()
+      return dispatch(etherBalancesError())
     }
 
     let accounts = getState().accounts.addresses

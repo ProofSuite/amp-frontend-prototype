@@ -1,16 +1,15 @@
 import React, { Component } from 'react'
-import { Icon } from 'antd'
+import { Icon, Intent } from '@blueprintjs/core'
 
 import styled from 'styled-components'
 
-export default class DownloadWallet extends Component {
+export default class DownloadWalletStep extends Component {
   render () {
     return (
       <DownloadWalletContainer>
-        <div>
-          <Icon type='check-circle' style={{ fontSize: 60, color: 'green' }} />
-        </div>
+        <Icon icon='tick' iconSize={100} intent={Intent.SUCCESS} />
         <p style={{ fontSize: 26 }}>Wallet successfully created!</p>
+        <a href=''>Download wallet</a>
       </DownloadWalletContainer>
     )
   }

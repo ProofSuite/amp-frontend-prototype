@@ -3,7 +3,7 @@ import { withdrawRewardsRawTx, withdrawRewardsSignedTx } from '../../helpers/tx'
 import { walletAuthenticated, walletAuthenticationError, walletAuthenticating } from '../walletActions'
 
 import { validateTransaction } from '../../helpers/txValidator'
-import { decryptWallet } from '../../helpers/wallet'
+import { decryptWallet } from '../../helpers/wallets'
 
 export const WITHDRAW_REWARDS_TX_STARTED = 'WITHDRAW_REWARDS_TX_STARTED'
 export const WITHDRAW_REWARDS_TX_ERROR = 'WITHDRAW_REWARDS_TX_ERROR'
